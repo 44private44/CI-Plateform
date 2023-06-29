@@ -4022,11 +4022,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CI Platform\\CI Platform.csproj",
+      "projectUniqueName": "D:\\important\\122\\Projects\\CI-Plateform\\CI Platform\\CI Platform.csproj",
       "projectName": "CI Platform",
-      "projectPath": "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CI Platform\\CI Platform.csproj",
+      "projectPath": "D:\\important\\122\\Projects\\CI-Plateform\\CI Platform\\CI Platform.csproj",
       "packagesPath": "C:\\Users\\pca172\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CI Platform\\obj\\",
+      "outputPath": "D:\\important\\122\\Projects\\CI-Plateform\\CI Platform\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -4048,11 +4048,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj": {
-              "projectPath": "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj"
+            "D:\\important\\122\\Projects\\CI-Plateform\\CIPlatform.Entities\\CIPlatform.Entities.csproj": {
+              "projectPath": "D:\\important\\122\\Projects\\CI-Plateform\\CIPlatform.Entities\\CIPlatform.Entities.csproj"
             },
-            "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CIPlatform.Repositories\\CIPlatform.Repositories.csproj": {
-              "projectPath": "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CIPlatform.Repositories\\CIPlatform.Repositories.csproj"
+            "D:\\important\\122\\Projects\\CI-Plateform\\CIPlatform.Repositories\\CIPlatform.Repositories.csproj": {
+              "projectPath": "D:\\important\\122\\Projects\\CI-Plateform\\CIPlatform.Repositories\\CIPlatform.Repositories.csproj"
             }
           }
         }

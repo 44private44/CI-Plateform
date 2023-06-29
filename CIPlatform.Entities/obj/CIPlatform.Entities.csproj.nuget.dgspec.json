@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj": {}
+    "D:\\important\\122\\Projects\\CI-Plateform\\CIPlatform.Entities\\CIPlatform.Entities.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj": {
+    "D:\\important\\122\\Projects\\CI-Plateform\\CIPlatform.Entities\\CIPlatform.Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj",
+        "projectUniqueName": "D:\\important\\122\\Projects\\CI-Plateform\\CIPlatform.Entities\\CIPlatform.Entities.csproj",
         "projectName": "CIPlatform.Entities",
-        "projectPath": "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj",
+        "projectPath": "D:\\important\\122\\Projects\\CI-Plateform\\CIPlatform.Entities\\CIPlatform.Entities.csproj",
         "packagesPath": "C:\\Users\\pca172\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pca172\\Desktop\\TATVA\\CI-Plateform\\MVC\\CI Platform\\CIPlatform.Entities\\obj\\",
+        "outputPath": "D:\\important\\122\\Projects\\CI-Plateform\\CIPlatform.Entities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
