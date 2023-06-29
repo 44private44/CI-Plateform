@@ -689,7 +689,6 @@ namespace CI_Platform.Controllers
                     var oldIndex = missionData.SortOrder;
                     if (oldIndex != newIndex)
                     {
-
                         // Update the sort order of the dragged mission
                         missionData.SortOrder = newIndex;
                         _context.SaveChanges();
@@ -709,9 +708,7 @@ namespace CI_Platform.Controllers
                                 mission.SortOrder++; // Increment the sort order
                             }
                         }
-
                         _context.SaveChanges();
-
                         return Json(new { success = true });
                     }
                     else
@@ -729,7 +726,7 @@ namespace CI_Platform.Controllers
                 // Return an error response if there is an exception
                 return Json(new { success = false, message = "An error occurred while updating the sort order." });
             }
-
+            
         }
     }
 }
