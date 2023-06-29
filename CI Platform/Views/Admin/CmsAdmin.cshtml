@@ -1,0 +1,283 @@
+﻿@using CIPlatform.Entities.AdminModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+<head>
+     <script src="https://cdn.tiny.cloud/1/vrm6l4u7xy8ilkp9xjyo20x5mu0z3z7pccu4i3zjx0wmoo03/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
+@model CmsAdminModel
+@if (TempData["successcmsadd"] != null)
+{
+    <div class="alert alert-success">@TempData["successcmsadd"]</div>
+}
+@if (TempData["errorcms"] != null)
+{
+    <div class="alert alert-danger">@TempData["errorcms"]</div>
+}
+<div>
+    <div class="admin_user_title mt-5">
+        <h3>CMS Page</h3>
+        <hr>
+    </div>
+    <div class="row d-flex align-items-center mainadmin_search_div">
+        <div class="col-6 inside_div">
+            <div class="input-group">
+                <div class="form-outline">
+                    <input type="search" class="form-control admin_search"
+                           placeholder="Search" />
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="apply_button_card main_div_save text-end">
+                <a href="" data-bs-toggle="modal" data-bs-target="#cms_add" class="timesheet_add_button">
+                    <button class="card_apply_button storycanclebtn">
+                        <i class="fa-solid fa-plus"></i> Add
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        @*new cms add model*@
+
+        <div class="modal fade newuseradd" id="cms_add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Add</h5>
+                        <button type="button" class="btn-close recommended_coworker closebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body ">
+                        <form class="" method="post" id="cmsadminaddform">
+                            <!-- Basic Information -->
+                            <div class="row mb-4">
+                                <div class="form-group col-12">
+                                    <label asp-for="Title" class="mb-1" id="cmsaddtitlelabel">Title *</label>
+                                    <input asp-for="Title" type="text" class="form-control" id="cmsaddtitle"
+                                           placeholder="Enter title here">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="form-group col-12">
+                                    <label asp-for="Description" class="mb-1" id="cmsadddetailslabel">Description *</label>
+                                    <textarea asp-for="Description" id="cmsadddetails" placeholder="Enter Details...">
+                                          </textarea>
+                                    <script>
+                                        tinymce.init({
+                                          selector: 'textarea',
+                                          plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+                                          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                                          tinycomments_mode: 'embedded',
+                                          tinycomments_author: 'Author name',
+                                          mergetags_list: [
+                                            { value: 'First.Name', title: 'First Name' },
+                                            { value: 'Email', title: 'Email' },
+                                          ]
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="form-group col-12">
+                                    <label asp-for="Slug" class="mb-1" id="cmssluglelabel">Slug * </label>
+                                    <input asp-for="Slug" type="text" class="form-control" id="cmsaddslug"
+                                           placeholder="Enter slug">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="form-group col-12">
+                                    <label class="mb-1">Status</label>
+                                    <select asp-for="Status" class="form-select" id="cmsaddselect">
+                                        <option selected id="" value="1">Active</option>
+                                        <option id="" value="0">In-Active</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Save -->
+                            <div class="apply_button_card main_div_save mb-1">
+                                <a href="">
+                                    <button type="submit" class="card_apply_button" id="cmsAddSubmitButton">
+                                        Submit
+                                    </button>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="admin_user_table mt-4">
+        <table class="table main_user_table">
+            <thead>
+                <tr>
+                    <th scope="col" colspan=12>Title</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var cmsData in Model.cmsPages)
+                {
+
+                    <tr>
+                        <td colspan=12>@cmsData.Title</td>
+                        @if (@cmsData.Status == 1)
+                        {
+                            <td class="status_active">Active</td>
+                        }
+                        else
+                        {
+                            <td class="status_inactive">In-active</td>
+
+                        }
+                        <td>
+                            <i class="fa-regular fa-pen-to-square CmsEditAdminButton" data-bs-toggle="modal" data-bs-target="#cms_edit" data-cmsid="@cmsData.CmsPageId"></i>
+                            <i class="fa-solid fa-trash-can deleteihover  CmsDeleteAdminButton" data-bs-toggle="modal" data-bs-target="#cms_delete" data-cmsid="@cmsData.CmsPageId"></i>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+            @*Edit Cms edit model*@
+
+            <div class="modal fade newuseradd" id="cms_edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Edit</h5>
+                            <button type="button" class="btn-close recommended_coworker closebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body ">
+                            <form class="" method="post" id="cmsUpdateForm">
+                                <!-- Basic Information -->
+                                <div class="row mb-4">
+                                    <div class="form-group col-12">
+                                        <label asp-for="Title" class="mb-1" id="cmsaddtitleeditlabel">Title *</label>
+                                        <input asp-for="Title" type="text" class="form-control" id="cmsaddtitleedit"
+                                               placeholder="Enter title here">
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="form-group col-12">
+                                        <label asp-for="Description" class="mb-1" id="cmsadddetailseditlabel">Description *</label>
+                                        <textarea asp-for="Description" id="cmsadddetailsedit" placeholder="Enter Details...">
+                                          </textarea>
+                                        <script>
+                                            tinymce.init({
+                                              selector: 'textarea',
+                                              plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+                                              toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                                              tinycomments_mode: 'embedded',
+                                              tinycomments_author: 'Author name',
+                                              mergetags_list: [
+                                                { value: 'First.Name', title: 'First Name' },
+                                                { value: 'Email', title: 'Email' },
+                                              ]
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="form-group col-12">
+                                        <label asp-for="Slug" class="mb-1" id="cmsslugleditlabel">Slug * </label>
+                                        <input asp-for="Slug" type="text" class="form-control" id="cmsaddslugedit"
+                                               placeholder="Enter slug">
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="form-group col-12">
+                                        <label class="mb-1">Status</label>
+                                        <select asp-for="Status" class="form-select" id="cmseditselect">
+                                            <option selected id="" value="1">Active</option>
+                                            <option id="" value="0">In-Active</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Save -->
+                                <div class="apply_button_card main_div_save mb-1">
+                                    <a href="">
+                                        <button type="submit" class="card_apply_button" id="cmsEditSubmitButton">
+                                            Submit
+                                        </button>
+                                    </a>
+                                </div>
+
+                                <div id="cmsedittitleerror">
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Soft Delete Cms Modal -->
+            <div class="modal fade " id="cms_delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Delete</h5>
+                            <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center modeldeleteimage">
+                                <button class="rounded-circle">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <h4 class="pt-3">Are you sure?</h4>
+                                <p class="pt-4"> Do you really want to delete these records? this process cannot be undone.</p>
+
+                            </div>
+                            <div class=" d-flex apply_button_card main_div_save modelsubmit mt-4 deletebuttondiv justify-content-evenly">
+                                <button class="card_apply_button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
+                                <button class="card_apply_button cmsDelete">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </table>
+    </div>
+</div>
+
+<!-- Pagination -->
+<div class="pagination_div pagination_admin_div" id="mission_check2">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item @(ViewBag.PageNumber == 1 ? "disabled" : "")">
+                <a class="page-link" href="/Admin/CmsAdmin?page=@(ViewBag.PageNumber-1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                    <a class="page-link" href="/Admin/CmsAdmin?page=@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(ViewBag.PageNumber == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="/Admin/CmsAdmin?page=@(ViewBag.PageNumber+1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

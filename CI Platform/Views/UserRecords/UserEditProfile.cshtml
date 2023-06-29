@@ -1,0 +1,426 @@
+﻿@using CIPlatform.Entities.UserRecordsModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+<script src="https://kit.fontawesome.com/e7b47f6d71.js" crossorigin="anonymous"></script>
+@model UserEditProfileModel
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+</head>
+@if (TempData["success8"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Successfully changed your data !</strong>
+        @TempData["success"]
+    </div>
+}
+<div class="volunteeringMission storydetailsdiv usereditprofilediv">
+    <!-- header -->
+    <div class="container-fluid header_main">
+        <div class="row d-flex main_error_header main_landing_header">
+            <div class="col-6 d-flex rowlanding_padding_header">
+                <div class="col-12 d-flex error_header_menus landing_padding_header">
+                    <div class="sidebar">
+                        <button class="btn" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                            <img src="../IMAGES/CI Platform Assets/filter.png" alt="hamburger">
+                        </button>
+                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                             aria-labelledby="offcanvasExampleLabel">
+                            <div class="offcanvas-header">
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <div class=" p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Country</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">USA</a></li>
+                                        <li><a class="dropdown-item" href="#">INDIA</a></li>
+                                        <li><a class="dropdown-item" href="#">Canada</a></li>
+                                    </ul>
+                                </div>
+                                <div class=" p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">City</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Mumbai</a></li>
+                                        <li><a class="dropdown-item" href="#">Kolkata</a></li>
+                                        <li><a class="dropdown-item" href="#">Chicago</a></li>
+                                    </ul>
+                                </div>
+                                <div class="p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Theme</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Environment</a></li>
+                                        <li><a class="dropdown-item" href="#">Plantation</a></li>
+                                        <li><a class="dropdown-item" href="#">Education</a></li>
+                                    </ul>
+                                </div>
+                                <div class="p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Skill</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Archeology</a></li>
+                                        <li><a class="dropdown-item" href="#">History</a></li>
+                                        <li><a class="dropdown-item" href="#">Astronomy</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Storylisting", "Story")" class="stories_anchor error_heading_anchor mx-2">Stories</a>
+                    
+                </div>
+            </div>
+            @foreach (var userdata in Model.Users)
+            {
+                <div class="col-6 row d-flex landing_padding_header ">
+                    <div class="col-md-12 d-flex error_user_main landing_user landing_padding_header">
+                        <div class="error_user">
+                            <img src="~/@userdata.Avatar" class="rounded-circle" alt="">
+                        </div>
+                        <div class="">
+                            <button class=" filter error_header_dropdown error_user_dropdown landing_padding_header"
+                                type="button" data-bs-toggle="dropdown">
+                                <span class="error_header_span error_mobile_user">
+
+                                    @userdata.FirstName @userdata.LastName
+                                </span>
+                                <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+                            </button>
+                            <ul class="dropdown-menu special_landing_dropdown">
+                                <li><a class="dropdown-item" href="#">Show your profile</a></li>
+                                 <li><a class="dropdown-item" asp-controller="Mission" asp-action="Landing">Go to Dashboard</a></li>
+                                <li><a class="dropdown-item" asp-controller="Timesheet" asp-action="VolunteeringTimesheet">Volunteering Timsheet</a></li>
+                                <li><a class="dropdown-item" @*asp-controller="UserAuth" asp-action="Login"*@ id="userLogout">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <hr>
+
+    <!-- Useredit profile and content -->
+    <div class="userprofilecontent pt-5">
+        <div class="row">
+            @foreach (var validateuser in @Model.Users)
+            {
+                <div class="col-3 main-avatar_div">
+                    <div class="d-flex flex-column avatarcontent">
+                        <div class="error_user">
+                            <label for="avatar-upload" class="useravatarimage" id="userimagechange">
+                                <i class="fa-solid fa-pencil editimage"></i>
+                                <img src="~/@validateuser.Avatar" class="rounded-circle" alt="">
+                            </label>
+                            <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+                        </div>
+                        <div>
+                            <label> @validateuser.FirstName @validateuser.LastName</label>
+                        </div>
+                        <div class="changepassword">
+                            <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change password</a>
+                        </div>
+                        <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Create New Password</h5>
+                                        <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group col-12">
+                                            <label for="exampleInputEmail1" class="mb-1" id="useroldpassword"> Current Password *</label>
+                                            <input type="password" class="form-control" id="userprofileoldpassword"
+                                               placeholder="Enter your current password">
+                                        </div>
+                                        <div class="form-group col-12 mt-4">
+                                            <label for="exampleInputEmail1" class="mb-1" id="usernewpassword"> New Password *</label>
+                                            <input type="password" class="form-control" id="userprofilepassword"
+                                               placeholder="Enter your new password">
+                                            <label for="exampleInputEmail1" class="mb-1 mt-1 matchpassworddiv textdangerclass" id="usernewpasswordmatch"> Password must be atleast 8 characters !</label>
+                                        </div>
+                                        <div class="form-group col-12 mt-4">
+                                            <label for="exampleInputEmail1" class="mb-1" id="usernewconpassword"> Confirm Password *</label>
+                                            <input type="password" class="form-control" id="userprofileconpassword"
+                                               placeholder="Re-enter password">
+                                        </div>
+                                        <div class="matchpassworddiv mt-2" id="validatebothpdiv">
+                                            <label id="validatebothpassword">Both password must be same !</label>
+                                        </div>
+                                        <div class="apply_button_card main_div_save modelsubmit mt-4">
+                                            <a href="">
+                                                <button class="card_apply_button usereditpassword">
+                                                    Submit
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            <div class="col-9 main_form_div">
+                <form class="login_form" method="post" asp-action="UpdateUserProfile">
+                    <!-- Basic Information -->
+                    <label for="" class="content_title">Basic Information</label>
+                    <hr class="mb-4">
+                    <div class="row mb-4">
+                        <div class="form-group col-6">
+                            <label asp-for="FirstName" class="mb-1" id="uservalidname">Name *</label>
+                            <input asp-for="FirstName" type="text" class="form-control" id="userprofilename"
+                                   placeholder="Enter your name">
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="LastName" class="mb-1" id="uaevalidsname">Surname *</label>
+                            <input asp-for="LastName" type="text" class="form-control" id="userprofilesurname"
+                                   placeholder="Enter your surname">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="form-group col-6">
+                            <label asp-for="EmployeeId" class="mb-1">Employee ID</label>
+                            <input asp-for="EmployeeId" type="text" class="form-control" id="userprofileempid"
+                                   placeholder="Enter your employee id">
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="Manager" class="mb-1">Manager</label>
+                            <input asp-for="Manager" type="text" class="form-control" id="userprofilemanager"
+                                   placeholder="Enter your manager name">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="form-group col-6">
+                            <label asp-for="Title" class="mb-1">Title</label>
+                            <input asp-for="Title" type="text" class="form-control" id="userprofiletitle"
+                                   placeholder="Enter title">
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="Department" class="mb-1">Department</label>
+                            <input asp-for="Department" type="text" class="form-control" id="userprofiledept"
+                                   placeholder="Enter your department">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="form-group col">
+                            <label asp-for="ProfileText" class="mb-1" id="uservalidprofile">My Profile *</label>
+                            <textarea asp-for="ProfileText" class="form-control" id="userprofiletext"
+                                      placeholder="Enter your details..." rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="form-group col">
+                            <label asp-for="WhyIVolunteer" class="mb-1">Why I Volunteer?</label>
+                            <textarea asp-for="WhyIVolunteer" class="form-control" id="userprofilewhyivol"
+                                      placeholder="Enter your Comments..." rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Address Information -->
+                    <label for="" class="content_title">Address Information</label>
+                    <hr class="mb-4">
+                    <div class="row mb-5">
+                        <div class="form-group col-6">
+                            <label asp-for="CityId" class="mb-1">Enter your city</label>
+                            <select asp-for="CityId" class="form-select" aria-label="Default select example" id="city-select20">
+                                <option selected id="getusercity" value="0">Select your city</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="CountryId" class="mb-1" id="editUserprofileCountryLabel">Country *</label>
+                            <select asp-for="CountryId" class="form-select editUserprofileCountry" aria-label="Default select example" id="country-select20">
+                                <option selected id="getusercountry" value="0">Select your country</option>
+                                @foreach (var usercountry in Model.Country)
+                                {
+                                    <option value="@usercountry.CountryId">
+                                        @usercountry.Name
+                                    </option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Professional Information -->
+                    <label for="" class="content_title">Professional Information</label>
+                    <hr class="mb-4">
+                    <div class="row mb-5">
+                        <div class="form-group col-6">
+                            <label asp-for="Availablity" class="mb-1">Availablity</label>
+                            <select asp-for="Availablity" class="form-select" aria-label="Default select example">
+                                <option selected id="getuseravailability" value="DAILY">Select your availablity</option>
+                                <option value="DAILY">Daily</option>
+                                <option value="WEEKLY">Weekly</option>
+                                <option value="WEEKEND">Week-end</option>
+                                <option value="MONTHLY">Monthly</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="LinkedInUrl" class="mb-1">LinkedIn</label>
+                            <input asp-for="LinkedInUrl" type="text" class="form-control" id="userprofilelinkedin"
+                                   placeholder="Enter linkedIn URL">
+                        </div>
+                    </div>
+
+                    <!-- My skills -->
+                    <label for="" class="content_title">My Skills</label>
+                    <hr class="mb-4">
+
+                    <div class="row mb-1 main_skills_scroll userskills" id="userskillsdiv">
+                        <div class="alluserskillsscroll">
+                            @foreach (var userskills in Model.userSkills)
+                            {
+                                <p id="@userskills.UserSkillId"> @userskills.Skill?.SkillName</p>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="apply_button_card main_div_cancle mb-5 mt-3">
+                        <a href="" data-bs-toggle="modal" data-bs-target="#useraddskills">
+                            <button class="card_apply_button " id="">
+                                Add Skills
+                            </button>
+                        </a>
+                        <div class="modal fade" id="useraddskills" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content modeltextcolor">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="staticBackdropLabel">Add more skills</h4>
+                                        <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close" id="skillclose"></button>
+                                    </div>
+                                    <div class="modal-body row modelskillsbody">
+                                        <div class="col-6 allskillsmodel">
+                                            <h5> All skills</h5>
+                                            <hr>
+                                            <div>
+
+                                                @foreach (var allskills in Model.Skill)
+                                                {
+                                                    <p data-id="@allskills.SkillId" class="allskillchoose">
+                                                        @allskills.SkillName
+                                                        <i class="fa-solid fa-arrow-right-long"></i>
+                                                    </p>
+
+                                                }
+                                            </div>
+
+                                        </div>
+                                        <div class="col-6">
+                                            <h5> Your Skills</h5>
+                                            <hr>
+                                            <div class="addnewskill">
+                                                @foreach (var userselectedskills in Model.userSkills)
+                                                {
+                                                    <p data-id="@userselectedskills.UserSkillId" class="selectedskillchoose">
+                                                        @userselectedskills.Skill?.SkillName
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </p>
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer addskillmodelfooter">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="saveskills">Save</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="skillclose2">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Save -->
+                    <div class="apply_button_card main_div_save">
+                        <a href="">
+                            <button type="submit" class="card_apply_button " id="submitusereditdata">
+                                Save
+                            </button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- privacy policy footer -->
+    <div class="privacy_policy_landing">
+        <a asp-controller="UserRecords" asp-action="Policy">Privacy Policy</a>
+        <a data-bs-toggle="modal" data-bs-target="#contactus" class="footer_contactus"> Contact us</a>
+
+        <!-- Modal -->
+        <div class="modal fade contactusmaindiv" id="contactus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Contact Us</h5>
+                        <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    @foreach (var contactususerdata in Model.Users)
+                    {
+                        <div class="modal-body">
+                            <div class="form-group col-12">
+                                <label for="exampleInputEmail1" class="mb-1" id="contactusnamelabel"> Name *</label>
+                                <input type="text" class="form-control contactusmodelinput" id="contactusname"
+                                   placeholder=" Enter your Name" value="@contactususerdata.FirstName" disabled>
+                            </div>
+                            <div class="form-group col-12 mt-4">
+                                <label for="exampleInputEmail1" class="mb-1" id="contactusemaillabel"> Email Address *</label>
+                                <input type="email" class="form-control contactusmodelinput" id="contactusemail"
+                                   placeholder="Enter your Email-Address" value="@contactususerdata.Email" disabled>
+                            </div>
+                            <div class="form-group col-12 mt-4">
+                                <label for="exampleInputEmail1" class="mb-1" id="contactussubjectlabel">Subject *</label>
+                                <input type="text" class="form-control" id="contactussubject"
+                                   placeholder="Enter your Subject">
+                            </div>
+                            <div class="form-group col-12 mt-4">
+                                <label for="exampleInputEmail1" class="mb-1" id="contactusmessagelabel"> Message *</label>
+                                <textarea class="form-control" id="contactusmessage" placeholder="Enter your Message" rows="4" cols="50"></textarea>
+                            </div>
+                            <div class="apply_button_card main_div_save modelsubmit mt-4">
+                                <a href="">
+                                    <button class="card_apply_button  contactussend">
+                                        Send
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

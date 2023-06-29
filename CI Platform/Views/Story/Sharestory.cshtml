@@ -1,0 +1,230 @@
+﻿@using CIPlatform.Entities.MissionModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SharestoryModel
+<head>
+
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+
+</head>
+
+<div class="sharestory">
+    <!-- header -->
+    <div class="container-fluid header_main">
+        <div class="row d-flex main_error_header main_landing_header">
+            <div class="col-6 d-flex rowlanding_padding_header">
+                <div class="col-12 d-flex error_header_menus landing_padding_header">
+                    <div class="sidebar">
+                        <button class="btn" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                            <img src="../IMAGES/CI Platform Assets/filter.png" alt="hamburger">
+                        </button>
+                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                             aria-labelledby="offcanvasExampleLabel">
+                            <div class="offcanvas-header">
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <div class=" p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Country</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">USA</a></li>
+                                        <li><a class="dropdown-item" href="#">INDIA</a></li>
+                                        <li><a class="dropdown-item" href="#">Canada</a></li>
+                                    </ul>
+                                </div>
+                                <div class=" p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">City</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Mumbai</a></li>
+                                        <li><a class="dropdown-item" href="#">Kolkata</a></li>
+                                        <li><a class="dropdown-item" href="#">Chicago</a></li>
+                                    </ul>
+                                </div>
+                                <div class="p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Theme</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Environment</a></li>
+                                        <li><a class="dropdown-item" href="#">Plantation</a></li>
+                                        <li><a class="dropdown-item" href="#">Education</a></li>
+                                    </ul>
+                                </div>
+                                <div class="p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Skill</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Archeology</a></li>
+                                        <li><a class="dropdown-item" href="#">History</a></li>
+                                        <li><a class="dropdown-item" href="#">Astronomy</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Storylisting", "Story")" class="stories_anchor error_heading_anchor mx-2">Stories</a>
+
+                </div>
+            </div>
+            @foreach (var userdata in Model.Users)
+            {
+                <div class="col-6 row d-flex landing_padding_header ">
+                    <div class="col-md-12 d-flex error_user_main landing_user landing_padding_header">
+                        <div class="error_user">
+                            <img src="~/@userdata.Avatar" class="rounded-circle" alt="">
+                        </div>
+                        <div class="">
+                            <button class=" filter error_header_dropdown error_user_dropdown landing_padding_header"
+                                type="button" data-bs-toggle="dropdown">
+                                <span class="error_header_span error_mobile_user">
+
+                                    @userdata.FirstName @userdata.LastName
+                                </span>
+                                <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+                            </button>
+                            <ul class="dropdown-menu special_landing_dropdown">
+                                <li><a class="dropdown-item" asp-controller="UserRecords" asp-action="UserEditProfile">Show your profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="Mission" asp-action="Landing">Go to Dashboard</a></li>
+                                <li><a class="dropdown-item" asp-controller="Timesheet" asp-action="VolunteeringTimesheet">Volunteering Timsheet</a></li>
+                                <li><a class="dropdown-item" @*asp-controller="UserAuth" asp-action="Login"*@ id="userLogout">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <hr>
+    <div class="share_your_story_text">
+        <p>Share your story</p>
+    </div>
+    <div class="main_story_form">
+        @*<form id="sharestoryform">*@
+            <div class="row main_stortdata_div">
+                <div class="col-sm-4 mission_dropdown validatemissiondiv">
+                    <label for="" class="" id="missionvalidate">Select Mission *</label>
+                    <select class="form-select" aria-label="Default select example" id="mission-select">
+                        <option selected>Select your Mission</option>
+                        @foreach (var reletedmission in Model.missionApplications)
+                        {
+                            <option value="@reletedmission.Mission.MissionId">
+                                @reletedmission.Mission.Title @reletedmission.Mission.MissionId
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-4 mission_dropdown form-group validatetitlediv">
+                    <label for="" id="titlevalidate" class="">My Story Title *</label>
+                    <input type="text" class="form-control" id="sharestorytitle" placeholder="Enter story title">
+                </div>
+                <div class="col-sm-4 mission_dropdown validatedatediv">
+                    <label for="" id="datevalidate" calss="">Date *</label>
+                    <input type="date" class="form-control" id="sharestorydate" placeholder="Select date">
+                </div>
+            </div>
+            <div id="specialckeditor" class="">
+            </div>
+            <div class="story_ckeditor">
+                <label for="" id="storyvalidate" class"">My Story *</label>
+                <textarea id="editor" rows="5" cols="50" placeholder="Enter your text here...">
+            </textarea>
+                <script>
+                    var data;
+                    ClassicEditor
+                        .create(document.querySelector('#editor'))
+                        .then(editor => {data = editor;})
+                        .catch(error => {
+                            console.error(error);
+                        });
+                </script>
+            </div>
+
+            <div class="col-12 mission_dropdown form-group storyurl">
+                <label for="" id="videourlvalidate" class="">Enter Youtube Video URL *</label>
+                <input type="url" class="form-control" id="sharestoryvideourl" placeholder="Enter your url">
+            </div>
+            <div class="col-12 mission_dropdown form-group storyurl">
+                <label for="" id="storytypevalidate" class="">Enter type of story * </label>
+                <input type="text" class="form-control" id="sharestorytype" placeholder="which type of story">
+            </div>
+            <div class="storyimageupload">
+                <label class="uploadstoryimages" for="" id="uploadvalidate">Upload your Photos</label>
+                <div class="upload-container">
+                    <label for="file-upload" class="upload-label">
+                        <img src="../IMAGES/CI Platform Assets/drag-and-drop.png" alt="">
+                    </label>
+                    <input id="file-upload" type="file" multiple>
+                </div>
+
+                <div id="preview-container"></div>
+            </div>
+            <div class="row submitstorydiv d-flex">
+                <div class="col-6 d-flex">
+                    <div class="apply_button_card main_div_cancle">
+                        <a asp-controller="Story" asp-action="Storylisting">
+                            <button class="card_apply_button storycanclebtn">
+                                Cancle
+                            </button>
+                        </a>
+                    </div>
+                    <div class="apply_button_card main_div_cancle main_div_preview previewbtnstyle" id="previewstory">
+                        <a>
+                            <button class="card_apply_button previewmainbtn" id="previewbtnclick">
+                                Preview
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 d-flex justify-content-end saveandsubmitbtn">
+                    <div class="apply_button_card storysavebtn">
+                        <a href="">
+                            <button class="card_apply_button" id="savesharestory" type="submit">
+                                Save
+                            </button>
+                        </a>
+                    </div>
+                    <div class="apply_button_card">
+                        <a id="submitsharestorydesign">
+                            <button class="card_apply_button" id="submitsharestory">
+                                Submit
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @*</form>*@
+
+    </div>
+
+    <!-- privacy policy -->
+    <div class="privacy_policy_landing special_sharestory_footer">
+        <a asp-controller="UserRecords" asp-action="Policy">Privacy Policy</a>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+

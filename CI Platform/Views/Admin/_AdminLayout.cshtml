@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"] - CI_Platform</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="~/css/Style.css" />
+    <script src="https://kit.fontawesome.com/e7b47f6d71.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+</head>
+@{
+    var AdminName = ViewBag.AdminName;
+}
+<body>
+    <section class="admin_section">
+        <div class="row admin_content">
+            <div class="col-2 admin_menus pt-5">
+                <div class="admin_menus_subdiv">
+                    <div class="navigation_text mb-4">
+                        <label>NAVIGATION</label>
+                    </div>
+                    <div class="pb-2">
+                        <div class="main_admin_menus_divs">
+                            <a class="" asp-controller="Admin" asp-action="UserAdmin">
+                                <button>
+                                    <i class="bi bi-person-fill"></i>
+                                    User
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pb-2">
+                        <div class="main_admin_menus_divs">
+                            <a class="" asp-controller="Admin" asp-action="CmsAdmin">
+                                <button>
+                                    <i class="bi bi-file-earmark-fill"></i>
+                                    CMS Page
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pb-2">
+                        <div class="main_admin_menus_divs">
+                            <a class="" asp-controller="Admin" asp-action="MissionAdmin">
+                                <button>
+                                    <i class="bi bi-bullseye"></i>
+                                    Mission
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pb-2">
+                        <div class="main_admin_menus_divs">
+                            <a asp-controller="Admin" asp-action="MissionThemeAdmin">
+                                <button>
+                                    <i class="bi bi-columns-gap"></i>
+                                    Mission Theme
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pb-2">
+                        <div class="main_admin_menus_divs">
+                            <a asp-controller="Admin" asp-action="MissionSkillsAdmin">
+                                <button>
+                                    <i class="bi bi-tools"></i>
+                                    Mission Skills
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pb-2">
+                        <div class="main_admin_menus_divs">
+                            <a asp-controller="Admin" asp-action="MissionApplicationAdmin">
+                                <button>
+                                    <i class="bi bi-folder-fill"></i>
+                                    Mission Application
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pb-2">
+                        <div class="main_admin_menus_divs">
+                            <a asp-controller="Admin" asp-action="StoryAdmin">
+                                <button>
+                                    <i class="bi bi-bookmark-star-fill"></i>
+                                    Story
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pb-2">
+                        <div class="main_admin_menus_divs">
+                            <a asp-controller="Admin" asp-action="BannerAdmin">
+                                <button>
+                                    <i class="bi bi-menu-button"></i>
+                                    Banner Management
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 mt-3 admin_second_content">
+                <div class="admin_second_content_header">
+                    <div class="d-flex justify-content-between align-items-center ">
+                        <div>
+                            <label id="current-time"></label>
+                        </div>
+                        <div class="col-6 row d-flex landing_padding_header ">
+                            <div class="col-md-12 d-flex error_user_main landing_user landing_padding_header">
+                                <div class="error_user">
+                                    <img src="../IMAGES/CI Platform Assets/user-img.png" class="rounded-circle" alt="">
+                                </div>
+                                <div class="">
+                                    <button class=" filter error_header_dropdown error_user_dropdown landing_padding_header"
+                                            type="button" data-bs-toggle="dropdown" style="cursor:default;">
+                                        <span class="error_header_span error_mobile_user">@AdminName</span>
+                                    </button>
+                                    
+                                </div>
+                                <a class="admin_logout" @*asp-controller="UserAuth" asp-action="Login"*@ id="adminLogout">
+                                    <i class="fa-solid fa-right-from-bracket" style="cursor:pointer;"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    @RenderBody()
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/ValidateData.js"></script>
+    <script src="~/js/Listngridview.js"></script>
+    <script src="~/js/AlertSuccess.js"></script>
+    <script src="~/js/search_mission.js"></script>
+    <script src="~/js/getCitiesByCountries.js"></script>
+    <script src="~/js/Storydata.js"></script>
+    <script src="~/js/Usereditdata.js"></script>
+    <script src="~/js/Timesheetdata.js"></script>
+    <script src="~/js/CmsAdmindata.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/Useradmin.js"></script>
+
+</body>
+</html>

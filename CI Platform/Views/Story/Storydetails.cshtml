@@ -1,0 +1,356 @@
+﻿@using CIPlatform.Entities.MissionModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+     var UserId = ViewBag.UserId;
+}
+@model StorydetailsModel
+
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+</head>
+
+<div class="volunteeringMission storydetailsdiv">
+    <!-- header -->
+    <div class="container-fluid header_main">
+        <div class="row d-flex main_error_header main_landing_header">
+            <div class="col-6 d-flex rowlanding_padding_header">
+                <div class="col-12 d-flex error_header_menus landing_padding_header">
+                    <div class="sidebar">
+                        <button class="btn" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                            <img src="~/IMAGES/CI Platform Assets/filter.png" alt="hamburger">
+                        </button>
+                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                             aria-labelledby="offcanvasExampleLabel">
+                            <div class="offcanvas-header">
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <div class=" p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Country</span>
+                                        <img src="~/IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+
+                                    <ul class="dropdown-menu">
+                                    </ul>
+
+                                </div>
+                                <div class=" p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">City</span>
+                                        <img src="~/IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Mumbai</a></li>
+                                        <li><a class="dropdown-item" href="#">Kolkata</a></li>
+                                        <li><a class="dropdown-item" href="#">Chicago</a></li>
+                                    </ul>
+                                </div>
+                                <div class="p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Theme</span>
+                                        <img src="~/IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Environment</a></li>
+                                        <li><a class="dropdown-item" href="#">Plantation</a></li>
+                                        <li><a class="dropdown-item" href="#">Education</a></li>
+                                    </ul>
+                                </div>
+                                <div class="p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Skill</span>
+                                        <img src="~/IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Archeology</a></li>
+                                        <li><a class="dropdown-item" href="#">History</a></li>
+                                        <li><a class="dropdown-item" href="#">Astronomy</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Storylisting", "Story")" class="stories_anchor error_heading_anchor mx-2">Stories</a>
+                    
+                </div>
+            </div>
+            @foreach (var item in Model.Users)
+            {
+                <div class="col-6 row d-flex landing_padding_header ">
+                    <div class="col-md-12 d-flex error_user_main landing_user landing_padding_header">
+                        <div class="error_user">
+                            <img src="~/@item.Avatar" class="rounded-circle" alt="">
+                        </div>
+                        <div class="">
+                            <button class=" filter error_header_dropdown error_user_dropdown landing_padding_header"
+                                type="button" data-bs-toggle="dropdown">
+                                <span class="error_header_span error_mobile_user">
+                                    @item.FirstName @item.LastName
+                                </span>
+                                <img src="~/IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+                            </button>
+                            <ul class="dropdown-menu special_landing_dropdown">
+                                <li><a class="dropdown-item" asp-controller="UserRecords" asp-action="UserEditProfile">Show your profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="Mission" asp-action="Landing">Go to Dashboard</a></li>
+                                <li><a class="dropdown-item" asp-controller="Timesheet" asp-action="VolunteeringTimesheet">Volunteering Timsheet</a></li>
+                                <li><a class="dropdown-item" @*asp-controller="UserAuth" asp-action="Login"*@ id="userLogout">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+
+
+    <!-- storydetails image and content -->
+    @foreach (var sdata in Model.stories)
+    {
+        string storyplainText = System.Text.RegularExpressions.Regex.Replace(@sdata.Description, @"<[^>]+>|&nbsp;", "").Trim();
+        <label class="selectedstoryid2 d-none" id="selectedstoryid">@sdata.StoryId</label>
+        <div class="row d-flex volunteering_image_content storydetails mt-5">
+            <div class="col-xxl-6 col-xl-12">
+                <div class="main_volunteering_image">
+                    @if (@sdata.StoryMedia.FirstOrDefault().VideoUrl.Contains("youtu.be") || @sdata.StoryMedia.FirstOrDefault().VideoUrl.Contains("youtube"))
+                    {
+                        <div id="video-container"></div>
+                        <script>
+                                              var youtubeLink = "@sdata.StoryMedia.FirstOrDefault().VideoUrl";
+                            var youtubeId = '';
+                            if (youtubeLink.indexOf('youtube.com') !== -1) {
+                                // Extract video ID from youtube.com URL
+                                youtubeId = youtubeLink.split('v=')[1];
+                            } else if (youtubeLink.indexOf('youtu.be') !== -1) {
+                                // Extract video ID from youtu.be URL
+                                youtubeId = youtubeLink.split('/').pop();
+                            }
+                            var videoContainer = document.getElementById('video-container');
+                            var iframe = document.createElement('iframe');
+                                            iframe.setAttribute('width', '800');
+                                            iframe.setAttribute('height', '450');
+                                            iframe.setAttribute('src', 'https://www.youtube.com/embed/' + youtubeId + '?autoplay=1&mute=1');
+                                            iframe.setAttribute('title', 'YouTube video player');
+                                            iframe.setAttribute('frameborder', '0');
+                                            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                                            videoContainer.appendChild(iframe);
+                        </script>
+                    }
+                    <img src="~/IMAGES/CI Platform Assets/image1.png" alt="" id="volunteering_image2">
+                    <img src="~/IMAGES/CI Platform Assets/img1.png" alt="" id="volunteering_image3">
+                    <img src="~/IMAGES/CI Platform Assets/img11.png" alt="" id="volunteering_image4">
+                    <img src="~/IMAGES/CI Platform Assets/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
+                     alt="" id="volunteering_image5">
+                </div>
+                <div class="container text-center p-0">
+                    <div class="row  justify-content-center">
+                        <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active">
+                                    <div class="col-md-3">
+                                        <div class="card">
+                                            <div class="card-img">
+                                                <img src="~/@sdata.StoryMedia.FirstOrDefault().Path"
+                                                 class="img-fluid small_slider_image_height"
+                                                 onclick="fun_volunteering_image3()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @foreach (var path in Model.MediaPaths.Skip(1))
+                                {
+                                    <div class="carousel-item ">
+                                        <div class="col-md-3">
+                                            <div class="card">
+                                                <div class="card-img">
+                                                    <img src="~/@path"
+                                                 class="img-fluid small_slider_image_height">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            <a class="carousel-control-prev control_custom_changes_carousel bg-transparent w-aut"
+                           href="#recipeCarousel" role="button" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </a>
+                            <a class="carousel-control-next control_custom_changes_carousel bg-transparent w-aut"
+                           href="#recipeCarousel" role="button" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- image content second part -->
+        <div class="col-xxl-6 col-xl-12 px-4 volunteer_image_second_content">
+                <div class="row main_storyuserdiv">
+                    <div class="error_user storypromateuser d-flex flex-column align-items-center col-4 ">
+                        <img src="~/@sdata.User.Avatar" class="rounded-circle" alt="">
+                        <label class="error_header_span error_mobile_user">@sdata.User.FirstName @sdata.User.LastName</label>
+                    </div>
+                    <div class="col-8 eyeviewsdiv">
+                        <button class="flex-end">
+                            <img src="~/IMAGES/CI Platform Assets/eye.png" alt="">
+                            @sdata.Views views
+                        </button>
+                    </div>
+                </div>
+                <div class="image_content_second_description mt-4">
+                    <p>
+                        @sdata.User.WhyIVolunteer
+                    </p>
+
+                </div>
+
+
+                <div class="card_date_button_div justify-content-around d-flex my-4 responsivestorydetails">
+                    <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary recommended_coworker story_recommended" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <img src="~/IMAGES/CI Platform Assets/add1.png" alt="">
+                        Recommend to a Co-Worker
+                    </button>
+
+                    <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Recommend to a Co-Worker</h5>
+                                    <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body modelbodyscroll">
+                                    @foreach (var item in Model.AllUsers)
+                                    {
+                                        <div class="d-flex mt-4 recommendedworker_main_div">
+                                            <div class="recommendedmodelusername">
+                                                <div class="error_user">
+                                                    <img src="~/@item.User.Avatar" class="rounded-circle" alt="">
+                                                    <label>
+                                                        @item.User.FirstName    @item.User.LastName
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="recommendedmodelbutton ">
+                                                @foreach (var item2 in Model.storiesInvite)
+                                                {
+                                                    @if (item.User.UserId == item2.ToUserId && @sdata.StoryId == item2.StoryId && item2.FromUserId == UserId)
+                                                    {
+                                                        <img src="~/IMAGES/CI Platform Assets/right.png" alt="">
+                                                        break;
+                                                    }
+                                                }
+
+                                                <button class="storyrecobtn" value="@item.User.Email">
+                                                    <img src="~/IMAGES/CI Platform Assets/add1.png" alt="">
+                                                    Recommend
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    }
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    @*<button type="button" class="btn btn-primary">Understood</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a asp-controller="Mission" asp-action="Volunteering" asp-route-id="@sdata.MissionId">
+                        <button class="openmissionbtn">
+                            Open mission
+                            <img src="~/IMAGES/CI Platform Assets/right-arrow.png" alt="">
+                        </button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="storydatamain">
+            <div class="image_content_second_header mt-4">
+                <p>@sdata.Title</p>
+            </div>
+            <hr>
+            <div>
+                @storyplainText
+            </div>
+            <br>
+
+        </div>
+    }
+    <!-- privacy policy footer -->
+    <div class="privacy_policy_landing">
+        <a asp-controller="UserRecords" asp-action="Policy">Privacy Policy</a>
+    </div>
+</div>
+
+<script>
+        /* small carousel */
+    let items = document.querySelectorAll('.carousel .carousel-item')
+
+    items.forEach((el) => {
+        const minPerSlide = 4
+        let next = el.nextElementSibling
+        for (var i = 1; i < minPerSlide; i++) {
+            if (!next) {
+                // wrap carousel by using first child
+                next = items[0]
+            }
+            let cloneChild = next.cloneNode(true)
+            el.appendChild(cloneChild.children[0])
+            next = next.nextElementSibling
+        }
+    })
+
+    /* small carousel  image click event*/
+    function fun_volunteering_image1() {
+        document.getElementById("volunteering_image1").style.display = "block";
+        document.getElementById("volunteering_image2").style.display = "none";
+        document.getElementById("volunteering_image3").style.display = "none";
+        document.getElementById("volunteering_image4").style.display = "none";
+        document.getElementById("volunteering_image5").style.display = "none";
+    }
+    function fun_volunteering_image2() {
+        document.getElementById("volunteering_image1").style.display = "none";
+        document.getElementById("volunteering_image2").style.display = "block";
+        document.getElementById("volunteering_image3").style.display = "none";
+        document.getElementById("volunteering_image4").style.display = "none";
+        document.getElementById("volunteering_image5").style.display = "none";
+    }
+    function fun_volunteering_image3() {
+        document.getElementById("volunteering_image1").style.display = "none";
+        document.getElementById("volunteering_image2").style.display = "none";
+        document.getElementById("volunteering_image3").style.display = "block";
+        document.getElementById("volunteering_image4").style.display = "none";
+        document.getElementById("volunteering_image5").style.display = "none";
+    }
+    function fun_volunteering_image4() {
+        document.getElementById("volunteering_image1").style.display = "none";
+        document.getElementById("volunteering_image2").style.display = "none";
+        document.getElementById("volunteering_image3").style.display = "none";
+        document.getElementById("volunteering_image4").style.display = "block";
+        document.getElementById("volunteering_image5").style.display = "none";
+    }
+    function fun_volunteering_image5() {
+        document.getElementById("volunteering_image1").style.display = "none";
+        document.getElementById("volunteering_image2").style.display = "none";
+        document.getElementById("volunteering_image3").style.display = "none";
+        document.getElementById("volunteering_image4").style.display = "none";
+        document.getElementById("volunteering_image5").style.display = "block";
+    }
+</script>
+

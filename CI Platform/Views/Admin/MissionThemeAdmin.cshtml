@@ -1,0 +1,241 @@
+﻿@using CIPlatform.Entities.AdminModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+
+@model MissionThemeAdminModel
+@if (TempData["skillsuccess"] != null)
+{
+    <div class="alert alert-success">@TempData["skillsuccess"]</div>
+}
+@if (TempData["skillerror"] != null)
+{
+    <div class="alert alert-danger">@TempData["skillerror"]</div>
+}
+<div>
+    <div class="admin_user_title mt-5">
+        <h3>Mission Theme</h3>
+        <hr>
+    </div>
+    <div class="row d-flex align-items-center mainadmin_search_div">
+        <div class="col-6 inside_div">
+            <div class="input-group">
+                <div class="form-outline">
+                    <input type="search" class="form-control admin_search"
+                           placeholder="Search" />
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="apply_button_card main_div_save text-end">
+                <a href="" data-bs-toggle="modal" data-bs-target="#ThemeAdmin" class="timesheet_add_button">
+                    <button class="card_apply_button storycanclebtn">
+                        <i class="fa-solid fa-plus"></i> Add
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="admin_user_table mt-4">
+        <table class="table main_user_table">
+            <thead>
+                <tr>
+                    <th scope="col" colspan=12>Theme Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var ThemeData in Model.MissionThemes)
+                {
+                    <tr>
+                        <td colspan=12>@ThemeData.Title</td>
+                        @if (@ThemeData.Status == 1)
+                        {
+                            <td class="status_active">Active</td>
+                        }
+                        else
+                        {
+                            <td class="status_inactive">In-active</td>
+
+                        }
+                        <td>
+                            <i class="fa-regular fa-pen-to-square ThemeEditButton " data-bs-toggle="modal" data-bs-target="#ThemeEditAdmin" data-themeid="@ThemeData.MissionThemeId"></i>
+                            <i class="fa-solid fa-trash-can deleteihover ThemeDeleteAdminButton  " data-bs-toggle="modal" data-bs-target="#Theme_delete" data-themeid="@ThemeData.MissionThemeId"></i>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+
+            @* Add Theme Model*@
+            <div class="modal fade" id="ThemeAdmin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Add new theme</h5>
+                            <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form method="post" id="AddThemeAdmin">
+
+                                <div class="form-group col-12 mt-4">
+                                    <label asp-for="Title" class="mb-1" id="ThemeAdminNameLabel">Theme Name *</label>
+                                    <input asp-for="Title" type="text" class="form-control" id="ThemeAdminName"
+                                           placeholder="Enter new Skill">
+                                </div>
+                                <!-- Active or not -->
+                                <div class="row mb-5 mt-4">
+                                    <div class="col-12">
+                                        <label class="mb-1">User Status</label>
+                                        <div class="d-flex story_status">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" asp-for="Status" value="1" checked>
+                                                <label class="form-check-label" for="active">
+                                                    Active
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" asp-for="Status" value="0">
+                                                <label class="form-check-label" for="inactive">
+                                                    Inactive
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="apply_button_card main_div_save modelsubmit mt-3 mb-3">
+                                    <a href="">
+                                        <button type="submit" class="card_apply_button" id="ThemeAdminSubmitbutton">
+                                            Submit
+                                        </button>
+                                    </a>
+                                </div>
+                                <div id="skillmesssageshow">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* Edit Theme Model*@
+            <div class="modal fade" id="ThemeEditAdmin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Edit Theme</h5>
+                            <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form method="post" id="ThemeAdminEditSave">
+
+                                <div class="form-group col-12 mt-4">
+                                    <label asp-for="Title" class="mb-1" id="ThemeAdminNameeditLabel">Theme Name *</label>
+                                    <input asp-for="Title" type="text" class="form-control" id="ThemeAdminNameedit"
+                                           placeholder="Enter new Skill">
+                                </div>
+                                <!-- Active or not -->
+                                <div class="row mb-5 mt-4">
+                                    <div class="col-12">
+                                        <label class="mb-1">User Status</label>
+                                        <div class="d-flex story_status">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" asp-for="Status" value="1" id="themeactive">
+                                                <label class="form-check-label" for="active">
+                                                    Active
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" asp-for="Status" value="0" id="themeinactive">
+                                                <label class="form-check-label" for="inactive">
+                                                    Inactive
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="apply_button_card main_div_save modelsubmit mt-3 mb-3">
+                                    <a href="">
+                                        <button type="submit" class="card_apply_button" id="ThemeAdminEditSavebutton">
+                                            Save
+                                        </button>
+                                    </a>
+                                </div>
+                                <div id="skillmesssageshow2">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Soft Delete theme Modal -->
+            <div class="modal fade " id="Theme_delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Delete</h5>
+                            <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center modeldeleteimage">
+                                <button class="rounded-circle">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <h4 class="pt-3">Are you sure?</h4>
+                                <p class="pt-4"> Do you really want to delete these records? this process cannot be undone.</p>
+
+                            </div>
+                            <div class=" d-flex apply_button_card main_div_save modelsubmit mt-4 deletebuttondiv justify-content-evenly">
+                                <button class="card_apply_button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
+                                <button class="card_apply_button ThemeDelete">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </table>
+    </div>
+</div>
+<!-- Pagination -->
+<div class="pagination_div pagination_admin_div" id="mission_check2">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item @(ViewBag.PageNumber == 1 ? "disabled" : "")">
+                <a class="page-link" href="/Admin/MissionThemeAdmin?page=@(ViewBag.PageNumber-1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                    <a class="page-link" href="/Admin/MissionThemeAdmin?page=@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(ViewBag.PageNumber == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="/Admin/MissionThemeAdmin?page=@(ViewBag.PageNumber+1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

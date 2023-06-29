@@ -1,0 +1,83 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!-- header in error page -->
+<div class="container-fluid">
+    <div class="row d-flex main_error_header">
+        <div class="col-6 d-flex row">
+            <div class="col-md-5 col-6 error_header_logo">
+                <img src="../IMAGES/CI Platform Assets/logo.png" alt="">
+            </div>
+            <div class="col-md-7 d-flex error_header_menus">
+                <a href="#" class="stories_anchor error_heading_anchor mx-2">Stories</a>
+                <div class="">
+                    <button class=" filter error_header_dropdown mx-2" type="button" data-bs-toggle="dropdown">
+                        <span class="error_header_span">Policy</span>
+                        <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+                    </button>
+                    <ul class="dropdown-menu dropdown_width_error">
+                        <li><a class="dropdown-item" href="#">USA</a></li>
+                        <li><a class="dropdown-item" href="#">INDIA</a></li>
+                        <li><a class="dropdown-item" href="#">Canada</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 row d-flex ">
+            <div class="col-md-12 d-flex error_user_main">
+                <div class="error_user">
+                    <img src="../IMAGES/CI Platform Assets/user-img.png" class="rounded-circle" alt="">
+                </div>
+                <div class="">
+                    <button class=" filter error_header_dropdown error_user_dropdown" type="button"
+                            data-bs-toggle="dropdown">
+                        <span class="error_header_span error_mobile_user">Evan Donohue</span>
+                        <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+                    </button>
+                    <ul class="dropdown-menu dropdown_width_error">
+                        <li><a class="dropdown-item" href="#">USA</a></li>
+                        <li><a class="dropdown-item" href="#">INDIA</a></li>
+                        <li><a class="dropdown-item" href="#">Canada</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="error_horizontalline">
+    <hr>
+</div>
+<!-- error image -->
+<div class="error_image_div">
+    <img src="../IMAGES/CI Platform Assets/404-Page-image.png" alt=" 404 error" class="img-fluid">
+</div>
+<!-- description of error -->
+<div class="error_pagenotfound">
+    <p>Page not Found</p>
+</div>
+<div class="error_pagenotfound_message">
+    <p><strong> Oops !</strong>The page you were looking for doesn't exist. </p>
+</div>
+<div class="error_pagenotfound error_pagemoved">
+    <p>you may have misstyped the address or the page may heve moved. </p>
+</div>
+<!-- go to homepage -->
+<div>
+    <div class="apply_button_card">
+        <button class="card_apply_button ">
+            Go to Homepage
+            <img src="../IMAGES/CI Platform Assets/right-arrow.png" alt="">
+        </button>
+    </div>
+</div>
+<!-- Privacy policy -->
+<div class="error_privacy_div">
+    <div class="error_horizontalline">
+        <hr>
+    </div>
+    <div class="privacy_policy_landing">
+        <a asp-controller="UserRecords" asp-action="Policy">Privacy Policy</a>
+    </div>
+</div>

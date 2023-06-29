@@ -1,0 +1,226 @@
+﻿@using System.Data
+@using CIPlatform.Entities.MissionModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var UserId = ViewBag.UserId;
+}
+@model List<SPMissionModel>
+<head>
+    <script src="https://kit.fontawesome.com/e7b47f6d71.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+</head>
+
+<!---- cards ----->
+<div>
+    <div class="row main_mission_post_card ">
+
+        @foreach (var missionData in Model)
+        {
+
+            <div class="col-xl-4 col-12 column quote1">
+                <div class="card demo">
+                    <p class="d-none missionid">@missionData.Missions.FirstOrDefault()?.MissionId</p>
+                    <p class="d-none countryName">@missionData.CountryName</p>
+                    <p class="d-none cityName">@missionData.CityName</p>
+                    <p class="d-none dateCreated">@missionData.Missions.FirstOrDefault()?.StartDate</p>
+                    <p class="d-none seatsLeft">@missionData.Missions.FirstOrDefault()?.SeatLeft</p>
+                    <p class="d-none deadlineDate">@missionData.Missions.FirstOrDefault()?.Deadline</p>
+
+                    <input class="mission-country" value="@missionData.Missions.FirstOrDefault()?.CountryId" type="hidden">
+                    <div class="for_list_viewdiv">
+                        <button class="location_card list_view_location mission-city" value="@missionData.Missions.FirstOrDefault()?.CityId">
+                            <img src="~/IMAGES/CI Platform Assets/pin1.png" alt="">
+                            @missionData.CityName
+                        </button>
+                        @if (@missionData.ApproveStatus == "APPROVE")
+                        {
+                            <button class="location_card applied_tag">
+                                Applied
+                            </button>
+                        }
+                        @if (@missionData.Missions.FirstOrDefault()?.EndDate <= DateTime.UtcNow)
+                        {
+                            <button class="location_card close_tag">
+                                Closed
+                            </button>
+                        }
+                        <button class="location_card heart_card list_view_heart favorite-button heart-remove"
+                            value="@missionData.Missions.FirstOrDefault()?.MissionId">
+                            <img src="~/IMAGES/CI Platform Assets/heart1.png" alt="">
+                        </button>
+
+                        <button class="location_card user_card list_view_user">
+                            <img src="~/IMAGES/CI Platform Assets/add1.png" alt="">
+                        </button>
+
+                        <img src="~/@missionData.MediaPath"
+                         class="card-img-top" alt="...">
+
+                        <div class="card_button_image_header_div">
+                            <button class="card_button_image_header mission-theme" value="@missionData.Missions.FirstOrDefault()?.ThemeId">@missionData.Title</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title Mission_Title"> @missionData.Missions.FirstOrDefault().Title</h5>
+                        <p class="card-text mission_searchD">
+                            @missionData.Missions.FirstOrDefault().Description
+                        </p>
+                        <div class="d-flex justify-content-between main_sets_div">
+                            <label for=""> @missionData.Missions.FirstOrDefault()?.OrganizationName </label>
+                            <div>
+                                @for (int i = 0; i < @missionData.AverageRating; i++)
+                                {
+                                    <span><img src="~/IMAGES/CI Platform Assets/selected-star.png" alt=""></span>
+                                }
+                                @for (int i = 0; i < 5 - @missionData.AverageRating; i++)
+                                {
+                                    <span><img src="~/IMAGES/CI Platform Assets/star.png" alt=""></span>
+                                }
+
+                            </div>
+                        </div>
+
+                        @if (@missionData.Missions.FirstOrDefault()?.MissionType == "Time")
+                        {
+                            <div class="card_date_button_div ">
+
+                                <button>
+                                    From @missionData.Missions.FirstOrDefault()?.StartDate.ToString().Substring(0,10)  until @missionData.Missions.FirstOrDefault()?.EndDate.ToString().Substring(0,10)
+                                </button>
+                            </div>
+                            <div class="d-flex justify-content-between landing_mobile_col">
+                                <div class="d-flex">
+                                    <div class="card_searts_image_div">
+                                        <img src="../IMAGES/CI Platform Assets/Seats-left.png" alt="">
+                                    </div>
+                                    <div class="d-flex flex-column card_seats_lable">
+                                        <label for="">@missionData.Missions.FirstOrDefault()?.SeatLeft</label>
+                                        <label for="">Seats left</label>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="card_searts_image_div">
+                                        <img src="../IMAGES/CI Platform Assets/deadline.png" alt="">
+                                    </div>
+                                    <div class="d-flex flex-column card_seats_lable">
+                                        <label for="">@missionData.Missions.FirstOrDefault()?.Deadline</label>
+                                        <label for="">Deadline</label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card_date_button_div">
+                                <button>
+                                    @missionData.GoalText
+                                </button>
+                            </div>
+                            <div class="d-flex justify-content-between landing_mobile_col main_sets_div">
+                                <div class="d-flex ">
+                                    <div class="card_searts_image_div">
+                                        <img src="../IMAGES/CI Platform Assets/Seats-left.png" alt="">
+                                    </div>
+                                    <div class="d-flex flex-column card_seats_lable">
+                                        <label for="">@missionData.Missions.FirstOrDefault()?.SeatLeft</label>
+                                        <label for="">Seats left</label>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="card_searts_image_div">
+                                        <img src="../IMAGES/CI Platform Assets/achieved.png" alt="">
+                                    </div>
+                                    <div class="d-flex flex-column card_seats_lable">
+                                        <div class="progress">
+                                            <div class="progress-bar w-75" role="progressbar" aria-valuenow="75"
+                                         aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <label for="">@missionData.GoalValue</label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div>
+                            <hr>
+                        </div>
+
+
+                        <div class="apply_button_card d-flex justify-content-between align-items-center">
+                            <div class="spmissionapprovestatus">
+                                @if (@missionData.ApproveStatus == "APPROVE")
+                                {
+                                    <i style="pointer-events: none;" class="fa-sharp fa-solid fa-circle-check right_icon sp_ApproveStatus disabled-icon "  data-missionID="@missionData.ApplicationId"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa-sharp fa-regular fa-circle-check right_icon sp_ApproveStatus" data-missionID="@missionData.ApplicationId"></i>
+                                }
+                                @if (@missionData.ApproveStatus == "DECLINE")
+                                {
+                                    <i style="pointer-events: none;" class="fa-sharp fa-solid fa-circle-xmark wrong_icon sp_ApproveStatusDecline disabled-icon" data-missionID="@missionData.ApplicationId"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa-sharp fa-regular fa-circle-xmark wrong_icon sp_ApproveStatusDecline " data-missionID="@missionData.ApplicationId"></i>
+                                }
+                            </div>
+                            <a asp-controller="Mission" asp-action="OneMissionDataByDApper" asp-route-MisionID="@missionData.Missions.FirstOrDefault()?.MissionId">
+                                <button class="card_apply_button">
+                                    Apply
+                                    <img src="../IMAGES/CI Platform Assets/right-arrow.png" alt="">
+                                </button>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@*<div>
+    <div class="row main_mission_post_card ">
+    @foreach (var missionData in Model)
+    {
+    // Display mission data
+    <div class="col-xl-4 col-12 column quote1">
+    <div class="card demo">
+
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.Title</h5>
+    <!-- Display other mission properties as needed -->
+
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.Description</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.StartDate</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.EndDate</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.Deadline</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.MissionType</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.MissionId</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.ThemeId</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.CityId</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.CountryId</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.Status</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.OrganizationName</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.OrganizationDetail</h5>
+    <h5 class="card-title Mission_Title">ccc @missionData.Missions.FirstOrDefault()?.Availability</h5>
+    <h5 class="card-title Mission_Title">@missionData.Missions.FirstOrDefault()?.SeatLeft</h5>
+    <h5 class="card-title Mission_Title">@missionData.CityName</h5>
+    <h5 class="card-title Mission_Title">@missionData.CountryName</h5>
+    <h5 class="card-title Mission_Title">@missionData.Title</h5>
+    <h5 class="card-title Mission_Title">@missionData.GoalText</h5>
+    <h5 class="card-title Mission_Title">@missionData.GoalValue</h5>
+
+    <img class="card-title Mission_Title" src="~/@missionData.MediaPath" alt="">
+
+    </div>
+    </div>
+    }
+    </div>
+    </div>*@
+
+

@@ -1,0 +1,386 @@
+﻿@using CIPlatform.Entities.AdminModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    Layout = "_AdminLayout";
+}
+@if (TempData["bannersuccess"] != null)
+{
+    <div class="alert alert-success">@TempData["bannersuccess"]</div>
+}
+@if (TempData["bannererror"] != null)
+{
+    <div class="alert alert-danger">@TempData["bannererror"]</div>
+}
+@model BannerAdminModel
+<div>
+    <div class="admin_user_title mt-5">
+        <h3>Banner Management</h3>
+        <hr>
+    </div>
+    <div class="row d-flex align-items-center mainadmin_search_div">
+        <div class="col-6 inside_div">
+            <div class="input-group">
+                <div class="form-outline">
+                    <input type="search" class="form-control admin_search"
+                           placeholder="Search" />
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="apply_button_card main_div_save text-end">
+                <a href="" data-bs-toggle="modal" data-bs-target="#addbannerAdmin" class="timesheet_add_button">
+                    <button class="card_apply_button storycanclebtn">
+                        <i class="fa-solid fa-plus"></i> Add
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="admin_user_table mt-4">
+        <table class="table main_user_table">
+            <thead>
+                <tr>
+                    <th scope="col" colspan=12> Image Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Sort Order</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var bannerData in Model.banners)
+                {
+                    <tr>
+                        <td colspan=12>@bannerData.Image</td>
+                        <td> @bannerData.Text</td>
+                        <td> @bannerData.SortOrder</td>
+                        <td>
+                            <i class="fa-regular fa-pen-to-square BannerEditButton" data-bs-toggle="modal" data-bs-target="#editbannerAdmin" data-bannerid="@bannerData.BannerId"></i>
+                            <i class="fa-solid fa-trash-can deleteihover BannerDeleteAdminButton" data-bs-toggle="modal" data-bs-target="#Banner_delete" data-bannerid="@bannerData.BannerId"></i>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+            @* Add Banner Model*@
+            <div class="modal fade" id="addbannerAdmin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Add new banner</h5>
+                            <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form method="post" id="addBannerForm">
+
+                                @*Banner Image*@
+                                <div class="storyimageupload">
+                                    <label class="uploadstoryimages" for="" id="bannerimagevalidate">Upload your Photo </label>
+                                    <div class="upload-container">
+                                        <label for="file-upload" class="upload-label">
+                                            <img src="../IMAGES/CI Platform Assets/drag-and-drop.png" alt="">
+                                        </label>
+                                        <input id="file-upload" type="file" multiple>
+                                    </div>
+
+                                    <div id="preview-container"></div>
+                                </div>
+
+                                @*Banner Text *@
+                                <div class="form-group col-12 mt-4">
+                                    <label asp-for="Text" class="mb-1" id="addBannerTextLabel">Banner Text *</label>
+                                    <input asp-for="Text" type="text" class="form-control" id="addBannerText"
+                                           placeholder="Enter banner text">
+                                </div>
+
+                                @*Banner Order *@
+
+                                <div class="form-group col-12 mt-4">
+                                    <label asp-for="SortOrder" class="mb-1" id="addBannerOrderLabel">Order *</label>
+                                    <input asp-for="SortOrder" type="number" class="form-control" id="addBannerOrder"
+                                           placeholder="Enter Banner Order" min="1">
+                                </div>
+
+                                <div class="apply_button_card main_div_save modelsubmit mt-4 mb-2">
+                                    <a href="">
+                                        <button type="submit" class="card_apply_button" id="addBannerSubmitBtn">
+                                            Submit
+                                        </button>
+                                    </a>
+                                </div>
+                                <div id="skillmesssageshow">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Edit Banner Model*@
+            <div class="modal fade" id="editbannerAdmin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Add new banner</h5>
+                            <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form method="post" id="editBannerForm">
+
+                                @*Banner Image*@
+                                <div class="storyimageupload">
+                                    <label class="uploadstoryimages" for="" id="bannereditimagevalidate">Upload your Photo </label>
+                                    <div class="upload-container2">
+                                        <label for="file-upload2" class="upload-label">
+                                            <img src="../IMAGES/CI Platform Assets/drag-and-drop.png" alt="">
+                                        </label>
+                                        <input id="file-upload2" type="file">
+                                    </div>
+
+                                    <div id="preview-container2"></div>
+                                </div>
+
+                                @*Banner Text *@
+                                <div class="form-group col-12 mt-4">
+                                    <label asp-for="Text" class="mb-1" id="editBannerTextLabel">Banner Text *</label>
+                                    <input asp-for="Text" type="text" class="form-control" id="editBannerText"
+                                           placeholder="Enter banner text">
+                                </div>
+
+                                @*Banner Order *@
+
+                                <div class="form-group col-12 mt-4">
+                                    <label asp-for="SortOrder" class="mb-1" id="editBannerOrderLabel">Order *</label>
+                                    <input asp-for="SortOrder" type="number" class="form-control" id="editBannerOrder"
+                                           placeholder="Enter Banner Order" min="1">
+                                </div>
+
+                                <div class="apply_button_card main_div_save modelsubmit mt-4 mb-2">
+                                    <a href="">
+                                        <button type="submit" class="card_apply_button" id="editBannerSubmitBtn">
+                                            Submit
+                                        </button>
+                                    </a>
+                                </div>
+                                <div id="bannermesssageshow2">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Soft Delete banner Modal -->
+            <div class="modal fade " id="Banner_delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Delete</h5>
+                            <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center modeldeleteimage">
+                                <button class="rounded-circle">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <h4 class="pt-3">Are you sure?</h4>
+                                <p class="pt-4"> Do you really want to delete these records? this process cannot be undone.</p>
+
+                            </div>
+                            <div class=" d-flex apply_button_card main_div_save modelsubmit mt-4 deletebuttondiv justify-content-evenly">
+                                <button class="card_apply_button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
+                                <button class="card_apply_button BannerDelete">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </table>
+    </div>
+</div>
+<!-- Pagination -->
+<div class="pagination_div pagination_admin_div" id="mission_check2">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item @(ViewBag.PageNumber == 1 ? "disabled" : "")">
+                <a class="page-link" href="/Admin/BannerAdmin?page=@(ViewBag.PageNumber-1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                    <a class="page-link" href="/Admin/BannerAdmin?page=@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(ViewBag.PageNumber == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="/Admin/BannerAdmin?page=@(ViewBag.PageNumber+1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+
+
+
+
+<script>
+        //image upload
+    const uploadContainer = document.querySelector('.upload-container');
+    const previewContainer = document.querySelector('#preview-container');
+
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        uploadContainer.addEventListener(eventName, e => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+    });
+
+    // Highlight drop area when item is dragged over
+    ['dragenter', 'dragover'].forEach(eventName => {
+        uploadContainer.addEventListener(eventName, e => {
+            uploadContainer.classList.add('highlight');
+        });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        uploadContainer.addEventListener(eventName, e => {
+            uploadContainer.classList.remove('highlight');
+        });
+    });
+
+    // Handle dropped files
+    uploadContainer.addEventListener('drop', e => {
+        const files = e.dataTransfer.files;
+        handleFiles(files);
+    });
+
+    // Handle selected files
+    document.querySelector('#file-upload').addEventListener('change', e => {
+        const files = e.target.files;
+        handleFiles(files);
+    });
+
+    function handleFiles(files) {
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const image = new Image();
+                    image.src = e.target.result;
+                    image.addEventListener('load', () => {
+                        const previewImage = document.createElement('div');
+                        previewImage.classList.add('preview-image');
+                        previewImage.innerHTML = `
+                <img src="${image.src}">
+                <div class="image-tag">${file.name}</div>
+                <button class="cancel-btn">x</button>
+              `;
+                        previewContainer.appendChild(previewImage);
+                        const cancelButton = previewImage.querySelector('.cancel-btn');
+                        cancelButton.addEventListener('click', () => {
+                            previewImage.remove();
+                        });
+                        // Convert image to base64 and include in data
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        ctx.drawImage(image, 0, 0);
+                        const dataURL = canvas.toDataURL(file.type);
+                        const imageData = {
+                            name: file.name,
+                            type: file.type,
+                            data: dataURL
+                        };
+                        // Add the base64 image data to a hidden input field
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'imageData[]';
+                        input.value = JSON.stringify(imageData);
+                        previewImage.appendChild(input);
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+
+
+      //image upload
+    const uploadContainer2 = document.querySelector('.upload-container2');
+    const previewContainer2 = document.querySelector('#preview-container2');
+
+       // Handle selected files
+    document.querySelector('#file-upload2').addEventListener('change', e => {
+        const files = e.target.files;
+        handleFiles2(files);
+    });
+
+        function handleFiles2(files) {
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const image = new Image();
+                    image.src = e.target.result;
+                    image.addEventListener('load', () => {
+                        const previewImage = document.createElement('div');
+                        previewImage.classList.add('preview-image');
+                        previewImage.innerHTML = `
+                <img src="${image.src}">
+                <div class="image-tag">${file.name}</div>
+                <button class="cancel-btn">x</button>
+              `;
+                        previewContainer2.appendChild(previewImage);
+                        const cancelButton = previewImage.querySelector('.cancel-btn');
+                        cancelButton.addEventListener('click', () => {
+                            previewImage.remove();
+                        });
+                        // Convert image to base64 and include in data
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        ctx.drawImage(image, 0, 0);
+                        const dataURL = canvas.toDataURL(file.type);
+                        const imageData2 = {
+                            name: file.name,
+                            type: file.type,
+                            data: dataURL
+                        };
+                        // Add the base64 image data to a hidden input field
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'imageData2[]';
+                        input.value = JSON.stringify(imageData2);
+                        previewImage.appendChild(input);
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+</script>

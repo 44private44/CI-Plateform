@@ -1,0 +1,99 @@
+﻿@using CIPlatform.Entities.MissionModel
+@{
+    var skills = ViewBag.selectedskill;
+}
+
+@model List<FilterMission>
+
+<div class="row filterrow m-0">
+    <div class="col-12 col-md-6 search-bar p-0">
+        <button type="button" class="btn">
+            <img src="../IMAGES/CI Platform Assets/search.png" alt="search" />
+        </button>
+        <input class="form-control search_input" type="text" placeholder="Search mission ..."
+               aria-label="Search" id="searchbar" oninput="search_mission()" />
+    </div>
+
+    <div class="col-12 col-md-6 row p-0 m-0 filterrow_second_menus_main_div">
+        <div class="col-3 p-0 ">
+            <button class="filter" type="button" data-bs-toggle="dropdown">
+                <span class="">Country</span>
+                <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+            </button>
+            <ul class="dropdown-menu countryDropdown" id="country">
+                @foreach (var mission in Model)
+                {
+                    <li value=@mission.Missions.Country.CountryId><a class="dropdown-item" href="#" value="@mission.Missions.Country.Name">@mission.Missions.Country.Name</a></li>
+                }
+            </ul>
+        </div>
+        <div class="col-3 p-0">
+            <button class="filter" type="button" data-bs-toggle="dropdown">
+                <span class="">City</span>
+                <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+            </button>
+            <ul class="dropdown-menu cityDropdown" id="cities">
+                @*@foreach (var mission in Model)
+                {
+                    <li class="" value="@mission.Missions.CityId">
+                        <a class="dropdown-item" href="#" value=@mission.Missions.CityId>
+                            <input class="form-check-input coupon_question" type="checkbox"
+                               id="@mission.Missions.City.Name"
+                               value="@mission.Missions.City.Name" />
+                            @mission.Missions.City.Name
+                        </a>
+                    </li>
+                }*@
+            </ul>
+        </div>
+        <div class="col-3 p-0">
+            <button class="filter" type="button" data-bs-toggle="dropdown">
+                <span class="">Theme</span>
+                <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+            </button>
+            <ul class="dropdown-menu themeDropdown">
+                @foreach (var mission in Model)
+                {
+                    <li value="@mission.Missions.ThemeId" class = "filtercheckboxes filterlist">
+                        <a class="dropdown-item form-check" href="#" value=@mission.Missions.ThemeId>
+                            <input class="form-check-input coupon_question" type="checkbox"
+                               onclick="CheckedId('@mission.Missions.Theme.Title')"
+                               id="@mission.Missions.Theme.Title"
+                               value="@mission.Missions.Theme.Title" />
+                            @mission.Missions.Theme.Title
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-3 p-0">
+            <button class="filter" type="button" data-bs-toggle="dropdown">
+                <span class="">Skill</span>
+                <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+            </button>
+            <ul class="dropdown-menu">
+                @foreach (var obj in skills)
+                {
+                    <li class="filterlist filtercheckboxes">
+                        <a class="dropdown-item form-check" href="#" value=@obj.Value>
+                            <input class="form-check-input coupon_question filtertext" type="checkbox"
+                               onclick="CheckedId('@obj.Text')"
+                               id="@obj.Text"
+                               value="@obj.Text" />
+                            @obj.Text
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row filter-bar-row align-items-center m-0 " id="filter-bar-row">
+    <div class="col-auto clearallbutton" id="clearallbutton">
+        <button type="button" class="btn btn-close-search clr-btn" onclick="this.parentElement.style.display='none'">
+        </button>
+    </div>
+</div>
+
+

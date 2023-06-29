@@ -1,0 +1,129 @@
+﻿@using CIPlatform.Entities.AdminModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@model StoryAdminModel
+<div>
+    <div class="admin_user_title mt-5">
+        <h3>Story</h3>
+        <hr>
+    </div>
+    <div class="row d-flex align-items-center mainadmin_search_div">
+        <div class="col-12 inside_div">
+            <div class="input-group">
+                <div class="form-outline">
+                    <input type="search" class="form-control admin_search"
+                           placeholder="Search" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="admin_user_table mt-4">
+        <table class="table main_user_table">
+            <thead>
+                <tr>
+                    <th scope="col">Story Title</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Mission Title</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody class="application_tablebody">
+
+                @foreach (var StoryData in Model.Stories)
+                {
+
+                    <tr>
+                        <td>@StoryData.Title</td>
+                        <td> @StoryData.User.FirstName @StoryData.User.LastName</td>
+                        <td> @StoryData.Mission.Title</td>
+                        <td>
+                            <a asp-controller="Admin" asp-action="StoryAdminView" asp-route-id="@StoryData.StoryId" class="timesheet_add_button">
+                                <button class="card_apply_button storycanclebtn">
+                                    View
+                                </button>
+                            </a>
+                            @if (StoryData.Status == "PUBLISHED")
+                            {
+                                <i class="fa-sharp fa-solid fa-circle-check right_icon storyApprove_status" data-storyid="@StoryData.StoryId"></i>
+                            }
+                            else
+                            {
+                                <i class="fa-sharp fa-regular fa-circle-check right_icon storyApprove_status" data-storyid="@StoryData.StoryId"></i>
+                            }
+                            @if (StoryData.Status == "DECLINED")
+                            {
+                                <i class="fa-sharp fa-solid fa-circle-xmark wrong_icon storyDeclined_status" data-storyid="@StoryData.StoryId"></i>
+                            }
+                            else
+                            {
+                                <i class="fa-sharp fa-regular fa-circle-xmark wrong_icon storyDeclined_status" data-storyid="@StoryData.StoryId"></i>
+                            }
+                            <i class="fa-solid fa-trash-can deleteihover StoryDeleteAdminButton" data-bs-toggle="modal" data-bs-target="#Story_delete" data-storyid="@StoryData.StoryId"></i>
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+            <!-- Soft Delete Story Modal -->
+            <div class="modal fade " id="Story_delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Delete</h5>
+                            <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center modeldeleteimage">
+                                <button class="rounded-circle">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <h4 class="pt-3">Are you sure?</h4>
+                                <p class="pt-4"> Do you really want to delete these records? this process cannot be undone.</p>
+
+                            </div>
+                            <div class=" d-flex apply_button_card main_div_save modelsubmit mt-4 deletebuttondiv justify-content-evenly">
+                                <button class="card_apply_button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
+                                <button class="card_apply_button StoryDelete">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </table>
+    </div>
+</div>
+
+
+<!-- Pagination -->
+<div class="pagination_div pagination_admin_div" id="mission_check2">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item @(ViewBag.PageNumber == 1 ? "disabled" : "")">
+                <a class="page-link" href="/Admin/StoryAdmin?page=@(ViewBag.PageNumber-1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                    <a class="page-link" href="/Admin/StoryAdmin?page=@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(ViewBag.PageNumber == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="/Admin/StoryAdmin?page=@(ViewBag.PageNumber+1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

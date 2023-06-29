@@ -1,0 +1,259 @@
+﻿@using CIPlatform.Entities.MissionModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var numberRange = Enumerable.Range(1, 5);
+}
+@model SPFormViewModel
+
+<form method="post" action="/Mission/SubmitForm">
+    <div class="row mt-5 mb-4 margin_div_set">
+        <div class="form-group col-12">
+            <label class="mb-1" id="addMissionTitleLabel">Mission Title *</label>
+            <input type="text" class="form-control" name="Submission.Title" placeholder="Enter mission title" />
+        </div>
+    </div>
+    <div class="row mb-4 margin_div_set">
+        <div class="form-group col-12">
+            <label class="mb-1" id="addMissionShortDescLabel">Mission Short Description *</label>
+            <input type="text" class="form-control" name="Submission.ShortDescription" placeholder="Enter mission short description" />
+        </div>
+    </div>
+
+
+    <!-- Mission city and country -->
+    <div class="row mb-4 margin_div_set">
+        <div class="form-group col-6">
+            <label class="mb-1" id="addMissionCityLabel"> City *</label>
+            <select class="form-select addMissionCity" id="city-select44" name="Submission.CityId">
+                <option value="0">Select your City</option>
+            </select>
+        </div>
+        <div class="form-group col-6">
+            <label class="mb-1" id="addMissionCountryLabel">Country *</label>
+            <select class="form-select addMissionCountry" id="country-select44" name="Submission.CountryId">
+                <option selected id="" value="">Select your Country</option>
+                @foreach (var usercountry in Model.Countries)
+                {
+                    <option value="@usercountry.CountryId">
+                        @usercountry.Name
+                    </option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <!-- Mission Organisation name and Organisation details -->
+    <div class="row mb-4 margin_div_set">
+        <div class="form-group col-12">
+            <label class="mb-1" id="addMissionOrgLabel">Mission Organisation Name *</label>
+            <input type="text" class="form-control" name="Submission.OrganizationName" placeholder="Enter mission organisation name" />
+        </div>
+    </div>
+    <!-- Mission type -->
+    <div class="row mb-5 mt-4 margin_div_set">
+        <div class="col-6">
+            <label class="mb-1">Mission Type</label>
+            <input type="radio" name="Submission.MissionType" value="Goal" id="goal-option" />
+            <label for="goal-option">Goal</label>
+
+            <input type="radio" name="Submission.MissionType" value="Time" id="time-option" />
+            <label for="time-option">Time</label>
+        </div>
+        <div class="form-group col-6 mission_time">
+            <label for="" class="mb-1" id=""> Mission registration deadline </label>
+            <input type="date" class="form-control" name="Submission.Deadline" placeholder="Select Date" />
+        </div>
+    </div>
+    <!-- Mission goal text date and goal value-->
+    <div class="mission_goal mb-4 row margin_div_set">
+        <div class="form-group col-6">
+            <label class="mb-1" id="addMissionGoalNameLabel">Goal title *</label>
+            <input type="text" class="form-control" name="Submission.GoalText" placeholder="Enter goal heading" />
+        </div>
+        <div class="form-group col-6">
+            <label class="mb-1" id="addMissionGoalValueLabel">Goal Value *</label>
+            <input type="text" class="form-control" name="Submission.GoalValue" placeholder="Enter value" />
+        </div>
+    </div>
+    <!-- Mission start date and end date-->
+    <div class="mb-4 row margin_div_set">
+        <div class="form-group col-6">
+            <label for="" class="mb-1" id=""> Mission start date </label>
+            <input type="date" class="form-control" name="Submission.StartDate" placeholder="Select Date" />
+        </div>
+        <div class="form-group col-6">
+            <label for="" class="mb-1" id=""> Mission end date </label>
+            <input type="date" class="form-control" name="Submission.EndDate" placeholder="Select Date" />
+        </div>
+    </div>
+
+    <div class="row mb-4 margin_div_set">
+        <div class="form-group col-6">
+            <label class="mb-1" id="addMissionAvailabilityLabel">Mission Availability *</label>
+            <select class="form-select" id="addMissionAvailability" name="Submission.Availability">
+                <option value="">Select Availability</option>
+                <option value="DAILY">DAILY</option>
+                <option value="WEEK-END">WEEK-END</option>
+                <option value="WEEKLY">WEEKLY</option>
+                <option value="MONTHLY">MONTHLY</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-5 mt-4 margin_div_set">
+        <div class="col-6">
+            <label class="mb-1">Mission Status</label>
+            <div class="form-check">
+                <input type="radio" name="Submission.Status" value="1" id="goal-option" class="form-check-input" />
+                <label for="goal-option" class="form-check-label">Active</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" name="Submission.Status" value="0" id="time-option" class="form-check-input" />
+                <label for="time-option" class="form-check-label">Inactive</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Images -->
+    <div class="storyimageupload mb-5">
+        <label class="uploadstoryimages" for="file-upload" id="uploadvalidate">Upload your Photos</label>
+        <div class="upload-container">
+            <label for="file-upload" class="upload-label">
+                <img src="~/Images/CI Platform Assets/drag-and-drop.png" alt="Choose file">
+            </label>
+            <input id="file-upload" type="file" name="files" multiple>
+        </div>
+        <div id="preview-container"></div>
+    </div>
+
+    <div class="apply_button_card main_div_save mb-1">
+        <a href="" id="submitsharestorydesign">
+            <button type="submit" class="card_apply_button" id="">
+                Submit
+            </button>
+        </a>
+    </div>
+</form>
+
+@*------------------------------BY using Tag healpers----------------------------------------------*@
+
+@*@using (Html.BeginForm("SubmitForm", "Mission", FormMethod.Post))
+    {*@
+@*<div class="row mt-5 mb-4 margin_div_set">
+    <div class="form-group col-12">
+    <label class="mb-1" id="addMissionTitleLabel">Mission Title *</label>
+    @Html.TextBoxFor(m => m.Submission.Title, new { @class = "form-control", @placeholder = "Enter mission title" })
+    </div>
+    </div>
+    <div class="row mb-4 margin_div_set">
+    <div class="form-group col-12">
+    <label class="mb-1" id="addMissionShortDescLabel">Mission Short Description *</label>
+    @Html.TextBoxFor(m => m.Submission.ShortDescription, new { @class = "form-control", @placeholder = "Enter mission short description" })
+    </div>
+    </div>*@
+
+
+<!-- Mission city and country -->
+@* <div class="row mb-4 margin_div_set">
+    <div class="form-group col-6">
+    <label class="mb-1" id="addMissionCityLabel"> City *</label>
+    @Html.DropDownListFor(m => m.Submission.CityId, new List<SelectListItem> { new SelectListItem { Text = "Select your City", Value = "0" } }, new { @class = "form-select addMissionCity", @id = "city-select44" })
+    </div>
+    <div class="form-group col-6">
+    <label class="mb-1" id="addMissionCountryLabel">Country *</label>
+    @Html.DropDownListFor(m => m.Submission.CountryId, new SelectList(Model.Countries, "CountryId", "Name"), "Select your Country", new { @class = "form-select addMissionCountry", @id = "country-select44" })
+    </div>
+    </div>*@
+
+<!-- Mission Organisation name and Organisation details -->
+@*<div class="row mb-4 margin_div_set">
+    <div class="form-group col-12">
+    <label class="mb-1" id="addMissionOrgLabel">Mission Organisation Name *</label>
+    @Html.TextBoxFor(m => m.Submission.OrganizationName, new { @class = "form-control", @placeholder = "Enter mission organisation name" })
+    </div>
+    </div>*@
+<!-- Mission type -->
+@*<div class="row mb-5 mt-4 margin_div_set">
+    <div class="col-6">
+    <label class="mb-1">Mission Type</label>
+    @Html.RadioButtonFor(m => m.Submission.MissionType, "Goal", new { id = "goal-option" })
+    <label for="goal-option">Goal</label>
+
+    @Html.RadioButtonFor(m => m.Submission.MissionType, "Time", new { id = "time-option" })
+    <label for="time-option">Time</label>
+    </div>
+    <div class="form-group col-6 mission_time">
+    <label for="" class="mb-1" id=""> Mission registration deadline </label>
+    @Html.TextBoxFor(m => m.Submission.Deadline, new { @class = "form-control", @placeholder = "Select Date", @type = "date", id = "addMissionDeadline" })
+    </div>
+    </div>*@
+<!-- Mission goal text date and goal value-->
+@*<div class="mission_goal mb-4 row margin_div_set">
+    <div class="form-group col-6">
+    <label class="mb-1" id="addMissionGoalNameLabel">Goal title *</label>
+    @Html.TextBoxFor(m => m.Submission.GoalText, new { @class = "form-control", @placeholder = "Enter goal heading" })
+    </div>
+    <div class="form-group col-6">
+    <label class="mb-1" id="addMissionGoalValueLabel">Goal Value *</label>
+    @Html.TextBoxFor(m => m.Submission.GoalValue, new { @class = "form-control", @placeholder = "Enter value" })
+    </div>
+    </div>*@
+<!-- Mission start date and end date-->
+@*<div class="mb-4 row margin_div_set">
+    <div class="form-group col-6">
+    <label for="" class="mb-1" id=""> Mission start date </label>
+    @Html.TextBoxFor(m => m.Submission.StartDate, new { @class = "form-control", @placeholder = "Select Date", @type = "date", id ="addMissionStartdate" })
+    </div>
+    <div class="form-group col-6">
+    <label for="" class="mb-1" id=""> Mission end date </label>
+    @Html.TextBoxFor(m => m.Submission.EndDate, new { @class = "form-control", @placeholder = "Select Date", @type = "date", id = "addMissionEnddate" })
+    </div>
+    </div>
+
+    <div class="row mb-4 margin_div_set">
+    <div class="form-group col-6">
+    <label class="mb-1" id="addMissionAvailabilityLabel">Mission Availability *</label>
+    @Html.DropDownListFor(m => m.Submission.Availability, new SelectList(new[] { "DAILY", "WEEK-END", "WEEKLY", "MONTHLY" }), "Select Availability", new { @class = "form-select", @id = "addMissionAvailability" })
+    </div>
+    </div>
+
+    <div class="row mb-5 mt-4 margin_div_set">
+    <div class="col-6">
+    <label class="mb-1">Mission Status</label>
+    <div class="form-check">
+    @Html.RadioButtonFor(m => m.Submission.Status, "1", new { id = "goal-option", @class = "form-check-input" })
+    <label for="goal-option" class="form-check-label">Active</label>
+    </div>
+    <div class="form-check">
+    @Html.RadioButtonFor(m => m.Submission.Status, "0", new { id = "time-option", @class = "form-check-input" })
+    <label for="time-option" class="form-check-label">Inactive</label>
+    </div>
+    </div>
+    </div>*@
+
+@* Upload Images *@
+@*<div class="storyimageupload mb-5">
+    <label class="uploadstoryimages" for="file-upload" id="uploadvalidate">Upload your Photos</label>
+    <div class="upload-container">
+    <label for="file-upload" class="upload-label">
+    <img src="~/Images/CI Platform Assets/drag-and-drop.png" alt="Choose file">
+    </label>
+    <input id="file-upload" type="file" name="files" multiple>
+    </div>
+
+    <div id="preview-container"></div>
+    </div>
+
+    <div class="apply_button_card main_div_save mb-1">
+    <a href="" id="submitsharestorydesign">
+    <button type="submit" class="card_apply_button" id="">
+    Submit
+    </button>
+    </a>
+    </div>
+
+    }
+*@
+

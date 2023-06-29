@@ -1,0 +1,99 @@
+﻿@page
+@using CIPlatform.Entities.MissionModel
+@{
+    var usern = ViewBag.usern;
+    var useravatar = ViewBag.useravatar;
+
+}
+@model List<FilterMission>
+<div class="container-fluid header_main">
+    <div class="row d-flex main_error_header main_landing_header">
+        <div class="col-6 d-flex rowlanding_padding_header">
+            <div class="col-12 d-flex error_header_menus landing_padding_header">
+                <div class="sidebar">
+                    <button class="btn" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                        <img src="~/IMAGES/CI Platform Assets/filter.png" alt="hamburger">
+                    </button>
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                         aria-labelledby="offcanvasExampleLabel">
+                        <div class="offcanvas-header">
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <div class=" p-0">
+                                <button class="filter" type="button" data-bs-toggle="dropdown">
+                                    <span class="">Country</span>
+                                    <img src="~/IMAGES/CI Platform Assets/drop-down.png"
+                                         class="mx-0 mx-sm-2" />
+                                </button>
+
+                                <ul class="dropdown-menu">
+                                </ul>
+
+                            </div>
+                            <div class=" p-0">
+                                <button class="filter" type="button" data-bs-toggle="dropdown">
+                                    <span class="">City</span>
+                                    <img src="~/IMAGES/CI Platform Assets/drop-down.png"
+                                         class="mx-0 mx-sm-2" />
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Mumbai</a></li>
+                                    <li><a class="dropdown-item" href="#">Kolkata</a></li>
+                                    <li><a class="dropdown-item" href="#">Chicago</a></li>
+                                </ul>
+                            </div>
+                            <div class="p-0">
+                                <button class="filter" type="button" data-bs-toggle="dropdown">
+                                    <span class="">Theme</span>
+                                    <img src="~/IMAGES/CI Platform Assets/drop-down.png"
+                                         class="mx-0 mx-sm-2" />
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Environment</a></li>
+                                    <li><a class="dropdown-item" href="#">Plantation</a></li>
+                                    <li><a class="dropdown-item" href="#">Education</a></li>
+                                </ul>
+                            </div>
+                            <div class="p-0">
+                                <button class="filter" type="button" data-bs-toggle="dropdown">
+                                    <span class="">Skill</span>
+                                    <img src="~/IMAGES/CI Platform Assets/drop-down.png"
+                                         class="mx-0 mx-sm-2" />
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Archeology</a></li>
+                                    <li><a class="dropdown-item" href="#">History</a></li>
+                                    <li><a class="dropdown-item" href="#">Astronomy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="@Url.Action("Storylisting", "Story")" class="stories_anchor error_heading_anchor mx-2">Stories</a>
+            </div>
+        </div>
+        <div class="col-6 row d-flex landing_padding_header ">
+            <div class="col-md-12 d-flex error_user_main landing_user landing_padding_header">
+                <div class="error_user">
+                    <img src="~/@useravatar" class="rounded-circle" alt="">
+                </div>
+                <div class="">
+                    <button class=" filter error_header_dropdown error_user_dropdown landing_padding_header"
+                            type="button" data-bs-toggle="dropdown">
+                        <span class="error_header_span error_mobile_user">@usern</span>
+                        <img src="~/IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+                    </button>
+                    <ul class="dropdown-menu special_landing_dropdown">
+                        <li><a class="dropdown-item" asp-controller="UserRecords" asp-action="UserEditProfile">Show your profile</a></li>
+                        <li><a class="dropdown-item" asp-controller="Mission" asp-action="Landing">Go to Dashboard</a></li>
+                        <li><a class="dropdown-item" asp-controller="Timesheet" asp-action="VolunteeringTimesheet">Volunteering Timsheet</a></li>
+                        <li><a class="dropdown-item" @* asp-controller="UserAuth" asp-action="Login"*@ id="userLogout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

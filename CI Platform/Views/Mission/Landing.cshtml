@@ -1,0 +1,296 @@
+﻿@using CIPlatform.Entities.MissionModel
+@*
+
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    var UserId = ViewBag.UserId;
+
+}
+@model List<FilterMission>
+
+<partial name="_header" />
+<partial name="_searchbar" />
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+</head>
+@if (TempData["success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["success"]')
+    </script>
+}
+<div class="container-fluid landing_main_div landing_main_div">
+    <!-- header partial == _header -->
+    <!-- filter partial searchbar-->
+    <!-- explore 72 mission -->
+    <div id="mission_check">
+        <div class="error_pagenotfound">
+            <p>No mission found</p>
+        </div>
+        <div>
+            <div class="apply_button_card">
+                <button class="card_apply_button mt-2">
+                    Submit new mission
+                    <img src="~/IMAGES/CI Platform Assets/right-arrow.png" alt="">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="mission_check3">
+        <div class="row main_div_mission_header">
+
+            <div class="col-6 mission_72">
+                <label for="">Explore<strong>&nbsp @Model.Count() Missions</strong></label>
+            </div>
+            <div class="col-6 row d-flex align-items-center p-0">
+                <div class=" col-xl-10 col-12 p-0 landing_mission_first">
+                    <button class="filter remove_border" type="button" data-bs-toggle="dropdown">
+                        <span class="">Sort By</span>
+                        <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+                    </button>
+
+                    <ul class="dropdown-menu" id="sort-box">
+                        <li><a class="dropdown-item" href="#">Newest</a></li>
+                        <li><a class="dropdown-item" href="#">Oldest</a></li>
+                        <li><a class="dropdown-item" href="#">Lowest available seats</a></li>
+                        <li><a class="dropdown-item" href="#">Highest available seats</a></li>
+                        <li><a class="dropdown-item" href="#">Sort by my favourite</a></li>
+                        <li><a class="dropdown-item" href="#">Sort by deadline</a></li>
+                    </ul>
+
+
+                </div>
+                <div class="col-xl-2 d-flex align-items-center landing_mission_second p-0">
+                    <a href="#" class="grid_button" id="grid" onclick="gridview()">
+                        <img src="../IMAGES/CI Platform Assets/grid.png" class="grid_image" alt="GRID">
+                    </a>
+                    <a href="#" class="list_button" id="list" onclick="listview()">
+                        <img src="../IMAGES/CI Platform Assets/list.png" alt="LIST">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="searchnullshow" id="error-message">
+        <div class="error_pagenotfound">
+            <p>No mission found</p>
+        </div>
+        <div>
+            <div class="apply_button_card">
+                <button class="card_apply_button mt-2">
+                    Submit new mission
+                    <img src="../IMAGES/CI Platform Assets/right-arrow.png" alt="">
+                </button>
+            </div>
+        </div>
+    </div>
+    <!---- cards ----->
+    <div>
+        <div class="row main_mission_post_card ">
+
+            @foreach (var mission in Model)
+            {
+                double avgRating = 0;
+                @if (mission.Missions.MissionRatings.Any())
+                {
+                    avgRating = (int)mission.Missions.MissionRatings.Average(r => r.Rating);
+                }
+
+
+                <div class="col-xl-4 col-12 column quote1">
+                    <div class="card demo">
+                        <p class="d-none missionid">@mission.Missions.MissionId</p>
+                        <p class="d-none countryName">@mission.Missions.Country.Name</p>
+                        <p class="d-none cityName">@mission.Missions.City.Name</p>
+                        <p class="d-none dateCreated">@mission.Missions.StartDate</p>
+                        <p class="d-none seatsLeft"> @mission.Missions.SeatLeft</p>
+                        <p class="d-none favouriterating">@avgRating</p>
+                        <p class="d-none deadlineDate">@mission.Missions.Deadline</p>
+
+                        <input class="mission-country" value="@mission.Missions.Country.CountryId" type="hidden">
+                        <div class="for_list_viewdiv">
+                            <button class="location_card list_view_location mission-city" value="@mission.Missions.CityId">
+                                <img src="~/IMAGES/CI Platform Assets/pin1.png" alt="">
+                                @mission.Missions.City.Name
+                            </button>
+                            @if (@mission.Missions.MissionApplications.Any(a => a.UserId == UserId && a.ApprovalStatus == "APPROVE"))
+                            {
+                                <button class="location_card applied_tag">
+                                    Applied
+                                </button>
+                            }
+                            @if(@mission.Missions.EndDate <= DateTime.UtcNow)
+                            {
+                                   <button class="location_card close_tag">
+                                    Closed
+                                </button>
+                            }
+                            @if (@mission.isvalid)
+                            {
+                                <button class="location_card heart_card list_view_heart favorite-button heart"
+                                value="@mission.Missions.MissionId">
+                                    <img src="~/IMAGES/CI Platform Assets/heart1.png" alt="">
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="location_card heart_card list_view_heart favorite-button heart-remove"
+                                value="@mission.Missions.MissionId">
+                                    <img src="~/IMAGES/CI Platform Assets/heart1.png" alt="">
+                                </button>
+                            }
+
+                            <button class="location_card user_card list_view_user">
+                                <img src="~/IMAGES/CI Platform Assets/add1.png" alt="">
+                            </button>
+
+                            <img src="../@mission.image?.MediaPath"
+                             class="card-img-top" alt="...">
+
+                            <div class="card_button_image_header_div">
+                                <button class="card_button_image_header mission-theme" value="@mission.Missions?.ThemeId">@mission.Missions?.Theme.Title</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title Mission_Title"> @mission.Missions?.Title</h5>
+                            <p class="card-text mission_searchD">
+                                @mission.Missions?.Description
+                            </p>
+                            <div class="d-flex justify-content-between main_sets_div">
+                                <label for="">  @mission.Missions?.OrganizationName </label>
+                                <div>
+                                    @for (int i = 0; i < avgRating; i++)
+                                    {
+                                        <span><img src="~/IMAGES/CI Platform Assets/selected-star.png" alt=""></span>
+                                    }
+                                    @for (int i = 0; i < 5 - avgRating; i++)
+                                    {
+                                        <span><img src="~/IMAGES/CI Platform Assets/star.png" alt=""></span>
+                                    }
+
+                                </div>
+                            </div>
+
+                            @if (@mission.Missions?.MissionType == "Time")
+                            {
+                                <div class="card_date_button_div ">
+
+                                    <button>
+                                        From @mission.Missions?.StartDate?.ToString().Substring(0,10)  until @mission.Missions?.EndDate?.ToString().Substring(0,10)
+                                    </button>
+                                </div>
+                                <div class="d-flex justify-content-between landing_mobile_col">
+                                    <div class="d-flex">
+                                        <div class="card_searts_image_div">
+                                            <img src="../IMAGES/CI Platform Assets/Seats-left.png" alt="">
+                                        </div>
+                                        <div class="d-flex flex-column card_seats_lable">
+                                            <label for="">@mission.Missions.SeatLeft</label>
+                                            <label for="">Seats left</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="card_searts_image_div">
+                                            <img src="../IMAGES/CI Platform Assets/deadline.png" alt="">
+                                        </div>
+                                        <div class="d-flex flex-column card_seats_lable">
+                                            <label for="">@mission.Missions.Deadline?.ToString().Substring(0,10)</label>
+                                            <label for="">Deadline</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="card_date_button_div">
+                                    <button>
+                                        @mission.goal.GoalObjectiveText
+                                    </button>
+                                </div>
+                                <div class="d-flex justify-content-between landing_mobile_col main_sets_div">
+                                    <div class="d-flex ">
+                                        <div class="card_searts_image_div">
+                                            <img src="../IMAGES/CI Platform Assets/Seats-left.png" alt="">
+                                        </div>
+                                        <div class="d-flex flex-column card_seats_lable">
+                                            <label for="">@mission.Missions.SeatLeft</label>
+                                            <label for="">Seats left</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="card_searts_image_div">
+                                            <img src="../IMAGES/CI Platform Assets/achieved.png" alt="">
+                                        </div>
+                                        <div class="d-flex flex-column card_seats_lable">
+                                            <div class="progress">
+                                                <div class="progress-bar w-75" role="progressbar" aria-valuenow="75"
+                                             aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <label for="">@mission.goal.GoalValue achieved</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div>
+                                <hr>
+                            </div>
+                            <div class="apply_button_card">
+                                <a asp-controller="Mission" asp-action="Volunteering" asp-route-id="@mission.Missions.MissionId">
+                                    <button class="card_apply_button">
+                                        Apply
+                                        <img src="../IMAGES/CI Platform Assets/right-arrow.png" alt="">
+                                    </button>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- dynamic Pagination -->
+    <div class="pagination_div" id="mission_check2">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item @(ViewBag.PageNumber == 1 ? "disabled" : "")">
+                    <a class="page-link" href="/Mission/Landing?page=@(ViewBag.PageNumber-1)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                @{
+                    double startPage = Math.Max(1, ViewBag.PageNumber - 2);
+                    double endPage = Math.Min(startPage + 4, ViewBag.TotalPages);
+                }
+
+                @for (double i = startPage; i <= endPage; i++)
+                {
+                    <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                        <a class="page-link" href="/Mission/Landing?page=@i">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(ViewBag.PageNumber == ViewBag.TotalPages ? "disabled" : "")">
+                    <a class="page-link" href="/Mission/Landing?page=@(ViewBag.PageNumber+1)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+
+    <!-- privacy policy -->
+    <partial name="_footer" />
+</div>
+
+
+

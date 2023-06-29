@@ -1,0 +1,89 @@
+﻿@using CIPlatform.Entities.UserRecordsModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model UserEditProfileModel
+
+<div class="volunteeringMission privacyandpolicy">
+    <!-- header -->
+    <div class="container-fluid header_main">
+        <div class="row d-flex main_error_header main_landing_header">
+            <div class="col-6 d-flex rowlanding_padding_header">
+                <div class="col-12 d-flex error_header_menus landing_padding_header">
+                    <a href="#" class="stories_anchor error_heading_anchor mx-2">Stories</a>
+                </div>
+            </div>
+                <div class="col-6 row d-flex landing_padding_header ">
+                    <div class="col-md-12 d-flex error_user_main landing_user landing_padding_header">
+                        <div class="error_user">
+                            <img src="~/IMAGES/CI Platform Assets/user1.png" class="rounded-circle" alt="">
+                        </div>
+                        <div class="">
+                            <button class=" filter error_header_dropdown error_user_dropdown landing_padding_header"
+                                type="button" data-bs-toggle="dropdown">
+                                <span class="error_header_span error_mobile_user">
+                                    Hello Friend
+                                </span>
+                                <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+                            </button>
+                            <ul class="dropdown-menu special_landing_dropdown">
+                                <li><a class="dropdown-item" asp-controller="UserAuth" asp-action="Login">Login</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <hr>
+
+    <!-- main privacy and policy content -->
+    <div class="policymaindiv">
+        <h2 class="pt-4 maintitle">Privacy and Cookies Policy</h2>
+        <div class="row pt-4">
+            <div class="col-3">
+                <div class="policylefttitle">
+                    @foreach (var cmsdata in Model.CmsPage)
+                    {
+                        <a href="#@cmsdata.Slug" id="intro-link" class="d-flex justify-content-between">
+                            <label for=""> @cmsdata.Title </label>
+                            <div>
+                                <img src="../IMAGES/CI Platform Assets/arrow.png" alt="">
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="col-9 policyrightcontent">
+                @foreach (var cmsdetails in Model.CmsPage)
+                {
+                    <div class="pb-4" id="@cmsdetails.Slug">
+                        <h3 class="pb-3">@cmsdetails.Title</h3>
+                        <p>
+                            @cmsdetails.Description
+                        </p>
+
+                    </div>
+                    <hr>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- privacy policy footer -->
+    <div class="privacy_policy_landing">
+        <a href="#">Privacy Policy</a>
+    </div>
+</div>
+
+<script>
+        const links = document.querySelectorAll('.policylefttitle a');
+
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        links.forEach(link => link.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+
+</script>

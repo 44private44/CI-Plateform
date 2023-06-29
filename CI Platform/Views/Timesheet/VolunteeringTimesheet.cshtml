@@ -1,0 +1,504 @@
+﻿@using CIPlatform.Entities.TimesheetModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<script src="https://kit.fontawesome.com/e7b47f6d71.js" crossorigin="anonymous"></script>
+
+@model VolunteeringTimesheetModel;
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+</head>
+<div class="volunteeringMission timesheet">
+    <!-- header -->
+    <div class="container-fluid header_main">
+        <div class="row d-flex main_error_header main_landing_header">
+            <div class="col-6 d-flex rowlanding_padding_header">
+                <div class="col-12 d-flex error_header_menus landing_padding_header">
+                    <div class="sidebar">
+                        <button class="btn" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                            <img src="../IMAGES/CI Platform Assets/filter.png" alt="hamburger">
+                        </button>
+                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                             aria-labelledby="offcanvasExampleLabel">
+                            <div class="offcanvas-header">
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <div class=" p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Country</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">USA</a></li>
+                                        <li><a class="dropdown-item" href="#">INDIA</a></li>
+                                        <li><a class="dropdown-item" href="#">Canada</a></li>
+                                    </ul>
+                                </div>
+                                <div class=" p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">City</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Mumbai</a></li>
+                                        <li><a class="dropdown-item" href="#">Kolkata</a></li>
+                                        <li><a class="dropdown-item" href="#">Chicago</a></li>
+                                    </ul>
+                                </div>
+                                <div class="p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Theme</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Environment</a></li>
+                                        <li><a class="dropdown-item" href="#">Plantation</a></li>
+                                        <li><a class="dropdown-item" href="#">Education</a></li>
+                                    </ul>
+                                </div>
+                                <div class="p-0">
+                                    <button class="filter" type="button" data-bs-toggle="dropdown">
+                                        <span class="">Skill</span>
+                                        <img src="../IMAGES/CI Platform Assets/drop-down.png"
+                                             class="mx-0 mx-sm-2" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Archeology</a></li>
+                                        <li><a class="dropdown-item" href="#">History</a></li>
+                                        <li><a class="dropdown-item" href="#">Astronomy</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Storylisting", "Story")" class="stories_anchor error_heading_anchor mx-2">Stories</a>
+                    
+                </div>
+            </div>
+            @foreach (var userdata in Model.Users)
+            {
+                <div class="col-6 row d-flex landing_padding_header ">
+                    <div class="col-md-12 d-flex error_user_main landing_user landing_padding_header">
+                        <div class="error_user">
+                            <img src="~/@userdata.Avatar" class="rounded-circle" alt="">
+                        </div>
+                        <div class="">
+                            <button class=" filter error_header_dropdown error_user_dropdown landing_padding_header"
+                                type="button" data-bs-toggle="dropdown">
+                                <span class="error_header_span error_mobile_user">
+
+                                    @userdata.FirstName @userdata.LastName
+                                </span>
+                                <img src="../IMAGES/CI Platform Assets/drop-down.png" class="mx-0 mx-sm-2" />
+                            </button>
+                            <ul class="dropdown-menu special_landing_dropdown">
+                                <li><a class="dropdown-item" asp-controller="UserRecords" asp-action="UserEditProfile">Show your profile</a></li>
+                                 <li><a class="dropdown-item" asp-controller="Mission" asp-action="Landing">Go to Dashboard</a></li>
+                                <li><a class="dropdown-item" href="#">Volunteering Timsheet</a></li>
+                                <li><a class="dropdown-item" @*asp-controller="UserAuth" asp-action="Login"*@ id="userLogout">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <hr>
+
+    <div class="timesheetmaindiv">
+        <div class="maintitle">
+            <p>Volunteering Timesheet</p>
+
+        </div>
+        <hr>
+        <div class="row pt-3">
+            <!-- hours -->
+            <div class="col-6 volunteer_hours">
+                <div class="p-3 volunteer-hours_inside">
+                    <div class="d-flex justify-content-between">
+                        <div class="hours_title">
+                            <p>Volunteering Hours</p>
+                        </div>
+                        <div class="apply_button_card main_div_save">
+                            <a href="" data-bs-toggle="modal" data-bs-target="#TimesheetHour" class="timesheet_add_button">
+                                <button class="card_apply_button storycanclebtn">
+                                    <i class="fa-solid fa-plus"></i> Add
+                                </button>
+                            </a>
+                        </div>
+                        <!-- Hour new Modal -->
+                        <div class="modal fade timesheethourmodel" id="TimesheetHour" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Please input below Volunteering Hours</h5>
+                                        <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" id="timesheetform">
+                                            <div class="col-12 mission_dropdown">
+                                                <label for="" class="mb-1" id="missionlabel">Mission *</label>
+                                                <select class="form-select" aria-label="Default select example" id="timesheet_mission-select">
+                                                    <option selected value="default">Faith Community Fellowship</option>
+
+                                                    @foreach (var reletedmission in Model.MissionApplications)
+                                                    {
+                                                        @if (@reletedmission.Mission.MissionType == "Time")
+                                                        {
+                                                            <option value="@reletedmission.Mission.MissionId">
+                                                                @reletedmission.Mission.Title (@reletedmission.Mission.MissionId)
+                                                            </option>
+                                                        }
+
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-12 mt-4">
+                                                <label for="exampleInputEmail1" class="mb-1" id="timesheethourdatelabel"> Date Volunteered *</label>
+                                                <input type="date" class="form-control" id="timesheethourdate"
+                                                       placeholder="Select Date" min="" max="">
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="form-group col-6 mt-4">
+                                                    <label for="exampleInputEmail1" class="mb-1" id="timesheethourlabel">Hours *</label>
+                                                    <input type="number" class="form-control" id="timesheethour"
+                                                           placeholder="Enter Spent Hours" min="1" max="23">
+                                                </div>
+                                                <div class="form-group col-6 mt-4">
+                                                    <label for="exampleInputEmail1" class="mb-1" id="timesheetminutelabel">Minutes *</label>
+                                                    <input type="number" class="form-control" id="timesheetminute"
+                                                           placeholder="Enter Spent Minutes" min="1" max="59">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 mt-4">
+                                                <label for="exampleInputEmail1" class="mb-1" id="timesheetmessagelabel"> Message * </label>
+                                                <textarea class="form-control" id="timesheetmessage" placeholder="Enter your Message" rows="4" cols="50"></textarea>
+                                            </div>
+                                            <div class="apply_button_card  mt-4">
+                                                <a href="#">
+                                                    <button type="submit" class="card_apply_button ">
+                                                        Submit
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timesheet_table">
+                        <table>
+                            <thead>
+                                <tr class="">
+                                    <th>Mission</th>
+                                    <th>Date</th>
+                                    <th>Hours</th>
+                                    <th>Minutes</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.timesheets == null || !Model.timesheets.Any(goaldata => goaldata.Time != TimeSpan.Zero))
+                                {
+                                    <tr>
+                                        <td>No data available</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var hourdata in Model.timesheets)
+                                    {
+                                        if (@hourdata.Time != TimeSpan.Zero)
+                                        {
+                                            // split the string into an array of substrings based on the colon delimiter
+                                            string timeString = @hourdata.Time.ToString();
+                                            string[] timeComponents = timeString.Split(':');
+
+                                            <tr>
+                                                <td class="tableheaderstyle">@hourdata.Mission.Title</td>
+                                                <td>@hourdata.DateVolunteered.ToString("dd/MM/yyyy")</td>
+                                                <td>@timeComponents[0] h</td>
+                                                <td>@timeComponents[1] min</td>
+                                                <td class="timesheetediticons">
+                                                    <i class="fa-regular fa-pen-to-square timesheethoureditid" data-bs-toggle="modal" data-bs-target="#TimesheetHouredit" data-timesheeteditid="@hourdata.MissionId"></i>
+                                                    <i class="fa-solid fa-trash-can timesheethourid deleteihover" data-bs-toggle="modal" data-bs-target="#TimesheetHourdelete" data-timesheetid="@hourdata.TimesheetId"></i>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                                <!-- Hour edit Modal -->
+                                <div class="modal fade timesheethourmodel" id="TimesheetHouredit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Please input below Volunteering Hours</h5>
+                                                <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post" id="timesheeteditform">
+                                                    <div class="col-12 mission_dropdown">
+                                                        <label for="" class="mb-1" id="missioneditlabel">Mission *</label>
+                                                        <select class="form-select" aria-label="Default select example" id="timesheet_mission-selectedit">
+                                                        </select>
+
+                                                    </div>
+
+                                                    <div class="form-group col-12 mt-4">
+                                                        <label for="exampleInputEmail1" class="mb-1" id="timesheethoureditdatelabel"> Date Volunteered *</label>
+                                                        <input type="date" class="form-control" id="timesheethoureditdate"
+                                                               placeholder="Select Date" min="" max="">
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="form-group col-6 mt-4">
+                                                            <label for="exampleInputEmail1" class="mb-1" id="timesheethoureditlabel">Hours *</label>
+                                                            <input type="number" class="form-control" id="timesheethouredit"
+                                                                   placeholder="Enter Spent Hours" min="0" max="23">
+                                                        </div>
+                                                        <div class="form-group col-6 mt-4">
+                                                            <label for="exampleInputEmail1" class="mb-1" id="timesheetminuteeditlabel">Minutes *</label>
+                                                            <input type="number" class="form-control" id="timesheetminuteedit"
+                                                                   placeholder="Enter Spent Minutes" min="0" max="59">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-12 mt-4">
+                                                        <label for="exampleInputEmail1" class="mb-1" id="timesheetmessageeditlabel"> Message * </label>
+                                                        <textarea class="form-control" id="timesheetmessageedit" placeholder="Enter your Message" rows="4" cols="50"></textarea>
+                                                    </div>
+                                                    <div class="apply_button_card  mt-4">
+                                                        <a href="#">
+                                                            <button type="submit" class="card_apply_button ">
+                                                                Submit
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Cancle Modal -->
+                                <div class="modal fade " id="TimesheetHourdelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Delete</h5>
+                                                <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="text-center modeldeleteimage">
+                                                    <button class="rounded-circle">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </button>
+                                                    <h4 class="pt-3">Are you sure?</h4>
+                                                    <p class="pt-4"> Do you really want to delete these records? this process cannot be undone.</p>
+
+                                                </div>
+                                                <div class=" d-flex apply_button_card main_div_save modelsubmit mt-4 deletebuttondiv justify-content-evenly">
+                                                    <button class="card_apply_button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
+                                                    <button class="card_apply_button timedelete">
+                                                        Delete
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Goals -->
+            <div class="col-6 volunteer_hours">
+                <div class="p-3 volunteer-hours_inside">
+                    <div class="d-flex justify-content-between">
+                        <div class="hours_title">
+                            <p>Volunteering Goals</p>
+                        </div>
+                        <div class="apply_button_card main_div_save">
+                            <a href="" data-bs-toggle="modal" data-bs-target="#TimesheetGoal" class="timesheet_add_button">
+                                <button class="card_apply_button storycanclebtn">
+                                    <i class="fa-solid fa-plus"></i> Add
+
+                                </button>
+                            </a>
+                        </div>
+                        <!-- goal Modal -->
+                        <div class="modal fade timesheethourmodel" id="TimesheetGoal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Please input below Volunteering Goal</h5>
+                                        <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" id="timesheetgoalform">
+                                            <div class="col-12 mission_dropdown">
+                                                <label for="" class="mb-1" id="goalmissionlabel">Mission *</label>
+                                                <select class="form-select" aria-label="Default select example" id="timesheet_goalmission-select">
+                                                    <option selected value="default">Plantation and Afforestation Programme</option>
+                                                    @foreach (var reletedmission in Model.MissionApplications)
+                                                    {
+                                                        @if (@reletedmission.Mission.MissionType == "Goal")
+                                                        {
+                                                            <option value="@reletedmission.Mission.MissionId">
+                                                                @reletedmission.Mission.Title (@reletedmission.Mission.MissionId)
+                                                            </option>
+                                                        }
+
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-12 mt-4">
+                                                <label for="exampleInputEmail1" class="mb-1" id="timesheetactionlabel">Actions *</label>
+                                                <input type="number" class="form-control" id="timesheetaction"
+                                                       placeholder="Enter action" min="0" max="1">
+                                            </div>
+                                            <div class="form-group col-12 mt-4">
+                                                <label for="exampleInputEmail1" class="mb-1" id="timesheetgoaldatelabel"> Date Volunteered *</label>
+                                                <input type="date" class="form-control" id="timesheetgoaldate"
+                                                       placeholder="Select Date" min="" max="">
+                                            </div>
+
+                                            <div class="form-group col-12 mt-4">
+                                                <label for="exampleInputEmail1" class="mb-1" id="timesheetgoalmessagelabel"> Message </label>
+                                                <textarea class="form-control" id="timesheetgoalmessage" placeholder="Enter your Message" rows="4" cols="50"></textarea>
+                                            </div>
+                                            <div class="apply_button_card  mt-4">
+                                                <a href="#">
+                                                    <button class="card_apply_button ">
+                                                        Submit
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timesheet_table">
+                        <table>
+                            <thead>
+
+                                <tr class="">
+                                    <th>Mission</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.timesheets == null || !Model.timesheets.Any(goaldata => goaldata.Time == TimeSpan.Zero))
+                                {
+                                    <tr>
+                                        <td>No data available</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var goaldata in Model.timesheets)
+                                    {
+                                        if (@goaldata.Time == TimeSpan.Zero)
+                                        {
+                                            <tr>
+                                                <td class="tableheaderstyle">@goaldata.Mission.Title</td>
+                                                <td>@goaldata.DateVolunteered.ToString("dd/MM/yyyy")</td>
+                                                <td> @goaldata.Action</td>
+                                                <td class="timesheetediticons">
+                                                    <i class="fa-regular fa-pen-to-square timesheetgoaleditid" data-bs-toggle="modal" data-bs-target="#TimesheeteditGoal" data-timesheeteditid="@goaldata.MissionId"></i>
+                                                    <i class="fa-solid fa-trash-can deleteihover timesheethourid" data-bs-toggle="modal" data-bs-target="#TimesheetHourdelete" data-timesheetid="@goaldata.TimesheetId"></i>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                                <!-- goal edit Modal -->
+                                <div class="modal fade timesheethourmodel" id="TimesheeteditGoal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Please input below Volunteering Goal</h5>
+                                                <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post" id="timesheetgoaleditform">
+                                                    <div class="col-12 mission_dropdown">
+                                                        <label for="" class="mb-1" id="goalmissionlabel">Mission *</label>
+                                                        <select class="form-select" aria-label="Default select example" id="timesheet_goaleditmission-select">
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-12 mt-4">
+                                                        <label for="exampleInputEmail1" class="mb-1" id="timesheetactioneditlabel">Actions *</label>
+                                                        <input type="number" class="form-control" id="timesheetactionedit"
+                                                               placeholder="Enter action" min="0" max="1">
+                                                    </div>
+                                                    <div class="form-group col-12 mt-4">
+                                                        <label for="exampleInputEmail1" class="mb-1" id="timesheetgoaldateeditlabel"> Date Volunteered *</label>
+                                                        <input type="date" class="form-control" id="timesheetgoaldateedit"
+                                                               placeholder="Select Date" min="" max="">
+                                                    </div>
+
+                                                    <div class="form-group col-12 mt-4">
+                                                        <label for="exampleInputEmail1" class="mb-1" id="timesheetgoalmessageeditlabel"> Message </label>
+                                                        <textarea class="form-control" id="timesheetgoalmessageedit" placeholder="Enter your Message" rows="4" cols="50"></textarea>
+                                                    </div>
+                                                    <div class="apply_button_card  mt-4">
+                                                        <a href="#">
+                                                            <button class="card_apply_button ">
+                                                                Submit
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- privacy policy footer -->
+    <div class="privacy_policy_landing">
+        <a asp-controller="UserRecords" asp-action="Policy">Privacy Policy</a>
+    </div>
+</div>

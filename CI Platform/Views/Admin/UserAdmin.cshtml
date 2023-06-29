@@ -1,0 +1,517 @@
+﻿@using CIPlatform.Entities.AdminModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@model UserAdminModel
+@if (TempData["success12"] != null)
+{
+    <div class="alert alert-success">@TempData["success12"]</div>
+}
+@if (TempData["success13"] != null)
+{
+    <div class="alert alert-success">@TempData["success13"]</div>
+}
+@if (TempData["success15"] != null)
+{
+    <div class="alert alert-success">@TempData["success15"]</div>
+}
+@if (TempData["error13"] != null)
+{
+    <div class="alert alert-danger">@TempData["error13"]</div>
+}
+<div>
+    <div class="admin_user_title mt-5">
+        <h3>User</h3>
+        <hr>
+    </div>
+    <div class="row d-flex align-items-center mainadmin_search_div">
+        <div class="col-6 inside_div">
+            <div class="input-group">
+                <div class="form-outline">
+                    <input type="search" class="form-control admin_search"
+                           placeholder="Search" id="admin_search" />
+                </div>
+            </div>
+        </div>
+        <div class="col-6 inside_div">
+            <div class="apply_button_card main_div_save text-end">
+                <a href="" data-bs-toggle="modal" data-bs-target="#user_add" id="addnewuseradminadd" class="timesheet_add_button">
+                    <button class="card_apply_button storycanclebtn">
+                        <i class="fa-solid fa-plus"></i> Add
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        @*new user add model*@
+
+        <div class="modal fade newuseradd" id="user_add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Add new user</h5>
+                        <button type="button" class="btn-close recommended_coworker closebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="login_form" method="post" id="addUserAdminForm">
+                            <!-- Basic Information -->
+                            <label for="" class="content_title">Basic Information</label>
+                            <hr class="mb-4">
+                            <div class="row mb-4">
+                                <div class="form-group col-6">
+                                    <label asp-for="FirstName" class="mb-1" id="userAdminvalidname">Name *</label>
+                                    <input asp-for="FirstName" type="text" class="form-control" id="userAdminprofilename"
+                                           placeholder="Enter your name">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label asp-for="LastName" class="mb-1" id="userAdminvalidsname">Surname *</label>
+                                    <input asp-for="LastName" type="text" class="form-control" id="userAdminprofilesurname"
+                                           placeholder="Enter your surname">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="form-group col-6">
+                                    <label asp-for="Email" class="mb-1" id="userAdminvalidemail">Email *</label>
+                                    <input asp-for="Email" type="email" class="form-control" id="userAdminprofileemail"
+                                           placeholder="Enter User Email" type="email" required>
+                                    <label for="" class="mb-1 mt-1 matchpassworddiv validatefield" id="userAdminValidateEmail"> Email already exists! Please use a different email address.</label>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label asp-for="Password" class="mb-1" id="userAdminprofilepasswordLabel">Password *</label>
+                                    <div class="input-group special_inputpassword_eye">
+                                        <input asp-for="Password" type="password" class="form-control" id="userAdminprofilepassword"
+                                               placeholder="Enter Password" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text password_eye">
+                                                <i id="eyeIcon2" class="fa fa-eye-slash" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <label for="" class="mb-1 mt-1 matchpassworddiv validatefield" id="usernewpasswordAdminmatchAdmin"> Password must be atleast 8 characters !</label>
+                                </div>
+
+                            </div>
+                            <div class="row mb-4">
+                                <div class="form-group col-6">
+                                    <label asp-for="EmployeeId" class="mb-1">Employee ID</label>
+                                    <input asp-for="EmployeeId" type="text" class="form-control" id="userAdminprofileempid"
+                                           placeholder="Enter your employee id">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label asp-for="Manager" class="mb-1">Manager</label>
+                                    <input asp-for="Manager" type="text" class="form-control" id="userAdminprofilemanager"
+                                           placeholder="Enter your manager name">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="form-group col-6">
+                                    <label asp-for="Title" class="mb-1">Title</label>
+                                    <input asp-for="Title" type="text" class="form-control" id="userAdminprofiletitle"
+                                           placeholder="Enter title">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label asp-for="Department" class="mb-1">Department</label>
+                                    <input asp-for="Department" type="text" class="form-control" id="userAdminprofiledept"
+                                           placeholder="Enter your department">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="form-group col">
+                                    <label asp-for="ProfileText" class="mb-1" id="userAdminvalidprofile">My Profile *</label>
+                                    <textarea asp-for="ProfileText" class="form-control" id="userAdminprofiletext"
+                                              placeholder="Enter your details..." rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-5">
+                                <div class="form-group col">
+                                    <label asp-for="WhyIVolunteer" class="mb-1">Why I Volunteer?</label>
+                                    <textarea asp-for="WhyIVolunteer" class="form-control" id="userAdminprofilewhyivol"
+                                              placeholder="Enter your Comments..." rows="4"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Address Information -->
+                            <label for="" class="content_title">Address Information</label>
+                            <hr class="mb-4">
+                            <div class="row mb-5">
+                                <div class="form-group col-6">
+                                    <label asp-for="CityId" class="mb-1">Enter your city</label>
+                                    <select asp-for="CityId" class="form-select" aria-label="Default select example" id="city-select5">
+                                        <option selected id="getuserAdmincity">Select your city</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label asp-for="CountryId" class="mb-1" id="addUserAdminCountry">Country *</label>
+                                    <select asp-for="CountryId" class="form-select addUserAdminCountry" aria-label="Default select example" id="country-select5">
+                                        <option selected id="getuserAdmincountry" value="">Select your country</option>
+                                        @foreach (var usercountry in Model.country)
+                                        {
+                                            <option value="@usercountry.CountryId">
+                                                @usercountry.Name
+                                            </option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Professional Information -->
+                            <label for="" class="content_title">Professional Information</label>
+                            <hr class="mb-4">
+                            <div class="row mb-4">
+                                <div class="form-group col-6">
+                                    <label asp-for="Availablity" class="mb-1">Availablity</label>
+                                    <select asp-for="Availablity" class="form-select" aria-label="Default select example" id="userAdminadminavailability">
+                                        <option selected id="getuserAdminavailability" value="DAILY">Select your availablity</option>
+                                        <option value="DAILY">Daily</option>
+                                        <option value="WEEKLY">Weekly</option>
+                                        <option value="WEEKEND">Week-end</option>
+                                        <option value="MONTHLY">Monthly</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label asp-for="LinkedInUrl" class="mb-1">LinkedIn</label>
+                                    <input asp-for="LinkedInUrl" type="text" class="form-control" id="userprofileAdminlinkedin"
+                                           placeholder="Enter linkedIn URL">
+                                </div>
+                            </div>
+                            <!-- Active or not -->
+                            <div class="row mb-5">
+                                <div class="col-12">
+                                    <label asp-for="Status" class="mb-1">User Status</label>
+                                    <div class="d-flex user_status">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" asp-for="Status" value="1" checked>
+                                            <label class="form-check-label" for="active">
+                                                Active
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" asp-for="Status" value="0">
+                                            <label class="form-check-label" for="inactive">
+                                                Inactive
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Save -->
+                            <div class="apply_button_card main_div_save">
+                                <a href="">
+                                    <button type="submit" class="card_apply_button" id="submituseradmindata">
+                                        Submit
+                                    </button>
+                                </a>
+                            </div>
+
+                            <!-- Add this HTML code to your cshtml file to define the modal dialog -->
+                            <div class="modal fade" id="emailValidationModal" tabindex="-1" role="dialog" aria-labelledby="emailValidationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="emailValidationModalLabel">Email Validation</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- The validation result message will be displayed here -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="admin_user_table mt-4">
+    <table class="table main_user_table">
+        <thead>
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Employee Id </th>
+                <th scope="col">Department</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userData in Model.Users)
+            {
+                @if (@userData.Flag == 1)
+                {
+                    <tr>
+                        <td>@userData.FirstName</td>
+                        <td>@userData.LastName</td>
+                        <td>@userData.Email</td>
+                        <td>@userData.EmployeeId</td>
+                        <td>@userData.Department</td>
+                        @if (@userData.Status == 1)
+                        {
+                            <td class="status_active">Active</td>
+                        }
+                        else
+                        {
+                            <td class="status_inactive">In-active</td>
+
+                        }
+                        <td>
+                            <i class="fa-regular fa-pen-to-square UserEditAdminButton" data-bs-toggle="modal" data-bs-target="#user_edit" data-userid="@userData.UserId"></i>
+                            <i class="fa-solid fa-trash-can deleteihover UserDeleteAdminButton" data-bs-toggle="modal" data-bs-target="#User_delete" data-userid="@userData.UserId"></i>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+
+    @*Edit user admin model*@
+
+    <div class="modal fade newuseradd" id="user_edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Edit user data</h5>
+                    <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="login_form" method="post" id="EditUserAdminForm">
+                        <!-- Basic Information -->
+                        <label for="" class="content_title">Basic Information</label>
+                        <hr class="mb-4">
+                        <div class="row mb-4">
+                            <div class="form-group col-6">
+                                <label asp-for="FirstName" class="mb-1" id="userAdminEditNameLabel">Name *</label>
+                                <input asp-for="FirstName" type="text" class="form-control" id="userAdminEditName"
+                                       placeholder="Enter your name">
+                            </div>
+                            <div class="form-group col-6">
+                                <label asp-for="LastName" class="mb-1" id="userAdminEditSnameLabel">Surname *</label>
+                                <input asp-for="LastName" type="text" class="form-control" id="userAdminEditSname"
+                                       placeholder="Enter your surname">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="form-group col-6">
+                                <label asp-for="Email" class="mb-1" id="userAdminEditEmailLabel">Email *</label>
+                                <input asp-for="Email" type="email" class="form-control" id="userAdminEditEmail"
+                                       placeholder="Enter User Email" disabled>
+
+                            </div>
+                            <div class="form-group col-6">
+                                <label asp-for="Password" class="mb-1" id="userAdminEditPasswordLabel">Password *</label>
+                                <div class="input-group special_inputpassword_eye">
+                                    <input asp-for="Password" type="password" class="form-control" id="userAdminEditPassword" placeholder="Enter Password" required disabled>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text password_eye">
+                                            <i id="eyeIcon" class="fa fa-eye-slash" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="form-group col-6">
+                                <label asp-for="EmployeeId" class="mb-1">Employee ID</label>
+                                <input asp-for="EmployeeId" type="text" class="form-control" id="userAdminEditEmpid"
+                                       placeholder="Enter your employee id">
+                            </div>
+                            <div class="form-group col-6">
+                                <label asp-for="Manager" class="mb-1">Manager</label>
+                                <input asp-for="Manager" type="text" class="form-control" id="userAdminEditManager"
+                                       placeholder="Enter your manager name">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="form-group col-6">
+                                <label asp-for="Title" class="mb-1">Title</label>
+                                <input asp-for="Title" type="text" class="form-control" id="userAdminEditTitle"
+                                       placeholder="Enter title">
+                            </div>
+                            <div class="form-group col-6">
+                                <label asp-for="Department" class="mb-1">Department</label>
+                                <input asp-for="Department" type="text" class="form-control" id="userAdminEditDept"
+                                       placeholder="Enter your department">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="form-group col">
+                                <label asp-for="ProfileText" class="mb-1" id="userAdminEditProfileLabel">My Profile *</label>
+                                <textarea asp-for="ProfileText" class="form-control" id="userAdminEditProfile"
+                                          placeholder="Enter your details..." rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="form-group col">
+                                <label asp-for="WhyIVolunteer" class="mb-1">Why I Volunteer?</label>
+                                <textarea asp-for="WhyIVolunteer" class="form-control" id="userAdminEditVolunteer"
+                                          placeholder="Enter your Comments..." rows="4"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Address Information -->
+                        <label for="" class="content_title">Address Information</label>
+                        <hr class="mb-4">
+                        <div class="row mb-5">
+                            <div class="form-group col-6">
+                                <label asp-for="CityId" class="mb-1">Enter your city</label>
+                                <select asp-for="CityId" class="form-select" aria-label="Default select example" id="city-select8">
+                                    <option selected id="" value="0">Select your city</option>
+                                   @* @foreach (var usercity in Model.cities)
+                                    {
+                                        <option value="@usercity.CityId">
+                                            @usercity.Name
+                                        </option>
+                                    }*@
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label asp-for="CountryId" class="mb-1" id="editUserAdminCountryLabel">Country *</label>
+                                <select asp-for="CountryId" class="form-select editUserAdminCountry" aria-label="Default select example" id="country-select8">
+                                    <option selected id="" value="0">Select your country</option>
+                                    @foreach (var usercountry in Model.country)
+                                    {
+                                        <option value="@usercountry.CountryId">
+                                            @usercountry.Name
+                                        </option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Professional Information -->
+                        <label for="" class="content_title">Professional Information</label>
+                        <hr class="mb-4">
+                        <div class="row mb-5">
+                            <div class="form-group col-6">
+                                <label asp-for="Availablity" class="mb-1">Availablity</label>
+                                <select asp-for="Availablity" class="form-select" aria-label="Default select example" id="UserAdminEditAva">
+                                    <option selected id="" value="DAILY">Select your availablity</option>
+                                    <option value="Daily">Daily</option>
+                                    <option value="WEEKLY">Weekly</option>
+                                    <option value="WEEKEND">Week-end</option>
+                                    <option value="MONTHLY">Monthly</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label asp-for="LinkedInUrl" class="mb-1">LinkedIn</label>
+                                <input asp-for="LinkedInUrl" type="text" class="form-control" id="userAdminEditLinkedin"
+                                       placeholder="Enter linkedIn URL">
+                            </div>
+                        </div>
+                        <!-- Active or not -->
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <label asp-for="Status" class="mb-1">User Status</label>
+                                <div class="d-flex user_status">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" asp-for="Status" value="1" id="useractive">
+                                        <label class="form-check-label" for="active">
+                                            Active
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" asp-for="Status" value="0" id="userinactive">
+                                        <label class="form-check-label" for="inactive">
+                                            Inactive
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Save -->
+                        <div class="apply_button_card main_div_save">
+                            <a href="">
+                                <button type="submit" class="card_apply_button" id="SubmitAdminUserEditData">
+                                    Save
+                                </button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Soft Delete user Modal -->
+    <div class="modal fade " id="User_delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Delete</h5>
+                    <button type="button" class="btn-close recommended_coworkerclosebtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center modeldeleteimage">
+                        <button class="rounded-circle">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <h4 class="pt-3">Are you sure?</h4>
+                        <p class="pt-4"> Do you really want to delete these records? this process cannot be undone.</p>
+
+                    </div>
+                    <div class=" d-flex apply_button_card main_div_save modelsubmit mt-4 deletebuttondiv justify-content-evenly">
+                        <button class="card_apply_button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
+                        <button class="card_apply_button userDelete">
+                            Delete
+                        </button>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="pagination_div pagination_admin_div" id="mission_check2">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item @(ViewBag.PageNumber == 1 ? "disabled" : "")">
+                <a class="page-link" href="/Admin/UserAdmin?page=@(ViewBag.PageNumber-1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                    <a class="page-link" href="/Admin/UserAdmin?page=@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(ViewBag.PageNumber == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="/Admin/UserAdmin?page=@(ViewBag.PageNumber+1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+
+

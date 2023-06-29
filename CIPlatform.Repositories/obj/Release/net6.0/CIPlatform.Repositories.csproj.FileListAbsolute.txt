@@ -1,0 +1,17 @@
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\bin\Release\net6.0\CIPlatform.Repositories.deps.json
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\bin\Release\net6.0\CIPlatform.Repositories.runtimeconfig.json
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\bin\Release\net6.0\CIPlatform.Repositories.dll
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\bin\Release\net6.0\ref\CIPlatform.Repositories.dll
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\bin\Release\net6.0\CIPlatform.Repositories.pdb
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\bin\Release\net6.0\CIPlatform.Entities.dll
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\bin\Release\net6.0\CIPlatform.Entities.pdb
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\obj\Release\net6.0\CIPlatform.Repositories.csproj.AssemblyReference.cache
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\obj\Release\net6.0\CIPlatform.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\obj\Release\net6.0\CIPlatform.Repositories.AssemblyInfoInputs.cache
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\obj\Release\net6.0\CIPlatform.Repositories.AssemblyInfo.cs
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\obj\Release\net6.0\CIPlatform.Repositories.csproj.CoreCompileInputs.cache
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\obj\Release\net6.0\CIPlatform.Repositories.csproj.CopyComplete
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\obj\Release\net6.0\CIPlatform.Repositories.dll
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\obj\Release\net6.0\ref\CIPlatform.Repositories.dll
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\obj\Release\net6.0\CIPlatform.Repositories.pdb
+C:\Users\pca172\Desktop\TATVA\CI-Plateform\MVC\CI Platform\CIPlatform.Repositories\obj\Release\net6.0\CIPlatform.Repositories.genruntimeconfig.cache
