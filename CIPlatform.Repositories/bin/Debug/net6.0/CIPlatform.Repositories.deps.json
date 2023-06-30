@@ -9,6 +9,7 @@
       "CIPlatform.Repositories/1.0.0": {
         "dependencies": {
           "CIPlatform.Entities": "1.0.0",
+          "Chart.js": "3.7.1",
           "Dapper": "2.0.123",
           "Microsoft.AspNetCore.Session": "2.2.0",
           "Microsoft.EntityFrameworkCore": "7.0.3",
@@ -56,6 +57,7 @@
           }
         }
       },
+      "Chart.js/3.7.1": {},
       "Dapper/2.0.123": {
         "runtime": {
           "lib/net5.0/Dapper.dll": {
@@ -949,6 +951,7 @@
       },
       "CIPlatform.Entities/1.0.0": {
         "dependencies": {
+          "Chart.js": "3.7.1",
           "Dapper": "2.0.123",
           "Microsoft.AspNetCore.Session": "2.2.0",
           "Microsoft.EntityFrameworkCore": "7.0.3",
@@ -981,6 +984,13 @@
       "sha512": "sha512-EycyMsb6rD2PK9P0SyibFfEhvWWttdrYhyPF4f41uzdB/44yQlV+2Wehxyg489Rj6gbPvSPgbKq0xsHJBhipZA==",
       "path": "azure.identity/1.6.0",
       "hashPath": "azure.identity.1.6.0.nupkg.sha512"
+    },
+    "Chart.js/3.7.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gJunTMEueTNdA5Hp92J9sv363msSemW+GSy1VtbrwjxCaMrp+/mgB20EdVezbP34dbM+h+A8G5XbEuL6tOJoCw==",
+      "path": "chart.js/3.7.1",
+      "hashPath": "chart.js.3.7.1.nupkg.sha512"
     },
     "Dapper/2.0.123": {
       "type": "package",

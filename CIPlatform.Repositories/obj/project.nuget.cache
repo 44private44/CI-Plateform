@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "xjTMim9Ko87vdReP7m4+3mkcFOMb0MDxUAc+ayML9lRGkxx3HXUtD0PRCmems/f15x8iqV7Z/OcW84KGLGmx+Q==",
+  "dgSpecHash": "XN3TLx0yLe3Dr4CXyxloaMqlpKJeDj+r99K0DFmEbPfMrf92OoZ4QqZoGhq9KXD/m2wMkhOMNNk0E0lzOlxywQ==",
   "success": true,
   "projectFilePath": "D:\\important\\122\\Projects\\CI-Plateform\\CIPlatform.Repositories\\CIPlatform.Repositories.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pca172\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\pca172\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\pca172\\.nuget\\packages\\chart.js\\3.7.1\\chart.js.3.7.1.nupkg.sha512",
     "C:\\Users\\pca172\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\pca172\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\pca172\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\2.2.0\\microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",

@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using System.Text.Json
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<div class="mission-pie-chart">
+        <canvas id="myChart"></canvas>
+        <script>
+            // Get the data from the ViewBag
+            var missionPercentages = @Html.Raw(JsonSerializer.Serialize(ViewBag.MissionPercentages));
+
+            // Create the pie chart
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: missionPercentages.map(data => data.MissionName),
+                    datasets: [{
+                        data: missionPercentages.map(data => data.Percentage),
+                        backgroundColor: [
+                            'red',
+                            'blue',
+                            'green',
+                            // Add more colors as needed
+                        ]
+                    }]
+                },
+                options: {
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var dataset = data.datasets[tooltipItem.datasetIndex];
+                                var total = dataset.data.reduce((previousValue, currentValue) => previousValue + currentValue);
+                                var currentValue = dataset.data[tooltipItem.index];
+                                var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                                return percentage + "%";
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+</div>
+
+
+
+
+

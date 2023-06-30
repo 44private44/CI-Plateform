@@ -726,7 +726,24 @@ namespace CI_Platform.Controllers
                 // Return an error response if there is an exception
                 return Json(new { success = false, message = "An error occurred while updating the sort order." });
             }
-            
+
+        }
+
+        // Pie chart
+
+        public ActionResult MissionPieChart()
+        {
+            // Create a connection to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                // Call the stored procedure and retrieve the mission percentages
+                var missionPercentages = connection.Query("CalculateMissionPercentage", commandType: System.Data.CommandType.StoredProcedure);
+
+                // Pass the mission percentages to the view
+                ViewBag.MissionPercentages = missionPercentages;
+            }
+
+            return View();
         }
     }
 }

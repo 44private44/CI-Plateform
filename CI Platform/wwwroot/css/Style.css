@@ -2816,23 +2816,38 @@ hr {
 .drag_drop_quote1 {
     padding-bottom: 25px;
 }
-.sort_view_location{
+
+.sort_view_location {
     left: 20%;
-    top : 4%;
+    top: 4%;
 }
-.sort_view_heart{
+
+.sort_view_heart {
     left: 26%;
     top: 61%;
 }
+
 .sort_view_user {
     left: 26%;
     top: 75%;
 }
+
 .sort-img-top {
     height: 30vh !important;
     width: 48vh;
 }
+
 .scrollable-container {
     height: 100vh; /* Adjust the height as per your requirements */
     overflow-y: auto;
+}
+
+/* Pie chhart css */
+
+.mission-pie-chart canvas {
+    /*width: 300px !important;
+    height: 300px !important;*/
+    max-width: 400px;
+    max-height: 400px;
+    margin: 0 auto;
 }

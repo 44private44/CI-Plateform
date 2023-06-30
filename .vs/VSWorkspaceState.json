@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\CI Platform",
-    "\\CI Platform\\Controllers"
+    "\\CI Platform\\Controllers",
+    "\\CI Platform\\Views"
   ],
-  "SelectedNode": "\\CI Platform\\Controllers\\MissionController.cs",
   "PreviewInSolutionExplorer": false
 }
