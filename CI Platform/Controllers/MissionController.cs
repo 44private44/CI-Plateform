@@ -741,6 +741,7 @@ namespace CI_Platform.Controllers
 
                 // Pass the mission percentages to the view
                 ViewBag.MissionPercentages = missionPercentages;
+
             }
 
             return View();

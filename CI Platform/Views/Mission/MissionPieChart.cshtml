@@ -8,46 +8,169 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<div class="mission-pie-chart">
-        <canvas id="myChart"></canvas>
-        <script>
-            // Get the data from the ViewBag
-            var missionPercentages = @Html.Raw(JsonSerializer.Serialize(ViewBag.MissionPercentages));
 
-            // Create the pie chart
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: missionPercentages.map(data => data.MissionName),
-                    datasets: [{
-                        data: missionPercentages.map(data => data.Percentage),
-                        backgroundColor: [
-                            'red',
-                            'blue',
-                            'green',
-                            // Add more colors as needed
-                        ]
-                    }]
-                },
-                options: {
-                    tooltips: {
-                        callbacks: {
-                            label: function (tooltipItem, data) {
-                                var dataset = data.datasets[tooltipItem.datasetIndex];
-                                var total = dataset.data.reduce((previousValue, currentValue) => previousValue + currentValue);
-                                var currentValue = dataset.data[tooltipItem.index];
-                                var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
-                                return percentage + "%";
-                            }
+
+<div class="mission-charts">
+    <div class="mission-pie-chart">
+        <h4 class="text-center">
+            Pie Chart
+        </h4>
+        <canvas id="pieChart"></canvas>
+    </div>
+    <div class="mission-bar-chart">
+        <h4 class="text-center">
+            Bar Chart
+        </h4>
+        <canvas id="barChart"></canvas>
+    </div>
+</div>
+
+<script>
+        // Get the data from the ViewBag
+        var missionPercentages = @Html.Raw(JsonSerializer.Serialize(ViewBag.MissionPercentages));
+
+        // Create the pie chart
+        var pieCtx = document.getElementById('pieChart').getContext('2d');
+        // Create a new chart
+        var pieChart = new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: missionPercentages.map(data => data.Month),
+                datasets: [{
+                    data: missionPercentages.map(data => data.Percentage),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                // For Hover
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var dataset = data.datasets[tooltipItem.datasetIndex];
+                            var total = dataset.data.reduce((previousValue, currentValue) => previousValue + currentValue);
+                            var currentValue = dataset.data[tooltipItem.index];
+                            var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                            return percentage + "%";
                         }
                     }
                 }
-            });
-        </script>
-</div>
+            }
+        });
+
+       // Create the bar chart
+    var barCtx = document.getElementById('barChart').getContext('2d');
+    var barChart = new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: missionPercentages.map(data => data.Month),
+            datasets: [{
+                label: 'Month',
+                data: missionPercentages.map(data => data.Percentage),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(153, 102, 255, 0.8)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Mission Percentages by Month',
+                }
+            },
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                     min: 0,
+                     max: 100,
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Percentage'
+                    }
+                }
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce((previousValue, currentValue) => previousValue + currentValue);
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                        return percentage + "%";
+                    }
+                }
+            }
+        }
+    });
+
+</script>
 
 
 
+@* Only Pie chart *@
 
+@*<div class="mission-pie-chart">
+    <h4 class="text-center">
+    Pie Chart
+    </h4>
+    <canvas id="myChart"></canvas>
+    <script>
+    // Get the data from the ViewBag
+    var missionPercentages = @Html.Raw(JsonSerializer.Serialize(ViewBag.MissionPercentages));
 
+    // Create the pie chart
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+    labels: missionPercentages.map(data => data.MissionName),
+    datasets: [{
+    data: missionPercentages.map(data => data.Percentage),
+    backgroundColor: [
+    'rgba(255, 99, 132, 0.8)',
+    'rgba(54, 162, 235, 0.8)',
+    'rgba(255, 206, 86, 0.8)',
+    'rgba(75, 192, 192, 0.8)',
+    'rgba(153, 102, 255, 0.8)'
+
+    ]
+    }]
+    },
+    options: {
+    tooltips: {
+    callbacks: {
+    label: function (tooltipItem, data) {
+    var dataset = data.datasets[tooltipItem.datasetIndex];
+    var total = dataset.data.reduce((previousValue, currentValue) => previousValue + currentValue);
+    var currentValue = dataset.data[tooltipItem.index];
+    var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+    return percentage + "%";
+    }
+    }
+    }
+    }
+    });
+    </script>
+    </div>*@

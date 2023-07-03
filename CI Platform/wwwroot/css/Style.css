@@ -2844,10 +2844,17 @@ hr {
 
 /* Pie chhart css */
 
-.mission-pie-chart canvas {
-    /*width: 300px !important;
+.mission-pie-chart canvas{
+/*    width: 300px !important;
     height: 300px !important;*/
     max-width: 400px;
     max-height: 400px;
+    margin: 0 auto;
+}
+.mission-bar-chart canvas {
+    height: 1200px;
+    width: 1200px;
+    max-width: 1400px;
+    max-height: 1400px;
     margin: 0 auto;
 }
